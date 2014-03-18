@@ -12,12 +12,21 @@ object Main {
 
     val f: Future[Int] = future {
       Thread.sleep(Random.nextInt(500))
-      42
+
+      // sometimes things work, sometimes they don't...
+      if (Random.nextInt(6) < 3) {
+        42
+      } else {
+        throw new Exception
+      }
     }
 
-    f.onComplete {
-      case Success(value) => println("Got callback:" + value)
-      case Failure(e) => e.printStackTrace
+    f onSuccess {
+      case value => println("We have the answer! It's " + value)
+    }
+
+    f onFailure {
+      case e => e.printStackTrace
     }
 
     // do the rest of your work
@@ -28,6 +37,7 @@ object Main {
     println("E ..."); Thread.sleep(100)
     println("F ..."); Thread.sleep(100)
 
+    // keep the jvm running
     Thread.sleep(2000)
   }
 }
