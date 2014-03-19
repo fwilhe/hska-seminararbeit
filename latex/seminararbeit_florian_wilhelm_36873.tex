@@ -1,0 +1,98 @@
+%
+% seminararbeit_florian_wilhelm_36873 Florian Wilhelm
+% Erstellt am 19.03.2014
+%
+% Bauen mit dem beiliegenden Makefile
+
+\documentclass[11pt,a4paper,titlepage,ngerman]{scrartcl}
+
+% Deutsch mit neuer Rechtschreibung
+\usepackage[ngerman]{babel}
+
+% Umlaute direkt eingeben http://www.jr-x.de/publikationen/latex/tipps/besonderheiten.html
+% Hatte hier ursprünglich "latin1" als Option, das ging aber nicht. Hängt wohl von der Codierung des Dokumentes ab.
+\usepackage[utf8]{inputenc} 
+
+% Einbinden von Grafiken
+\usepackage{graphicx}
+
+\usepackage{listings}
+
+% Setzen der Eigenschaften der erzeugten PDF-Datei
+\usepackage[pdftex,
+    pdfauthor={Florian Wilhelm},
+    pdfsubject={Seminararbeit Florian Wilhelm MatrNr 36873},
+    pdftitle={Futures and Promises in Scala},    
+    pdfproducer={Latex with hyperref},
+    pdfcreator={pdflatex}]{hyperref}
+
+% Glossar-Paket laden und Glossar erzeugen
+% Hierfür sind mehrere Übersetzungsvorgänge nötig. Dafür gibt es ein Build-Target im Makefile.
+\usepackage[toc]{glossaries}
+\makeglossaries
+
+%
+% Glossar
+%
+\newglossaryentry{haskell}{name={Haskell}, description={ist eine rein funktionale Programmiersprache. Sie ist unter \url{http://www.haskell.org} als freie Software verfügbar}}
+
+% Template: \newglossaryentry{yyy}{name=xxx, description={}} 
+
+%
+% Glossar Ende
+%
+
+%Römische Zahlen
+% http://www.mrunix.de/forums/showthread.php?t=44246
+\newcommand{\RM}[1]{\MakeUppercase{\romannumeral #1{.}}}
+
+\begin{document}
+
+% Zeilenumbrüche in Code-listings
+\lstset{breaklines=true}
+
+\titlehead{
+	\includegraphics[width=0.9\linewidth]{pic/500px-Hska_logo.png}
+}
+\title{Seminararbeit}
+\subtitle{Futures and Promises in Scala}
+\author{Florian Wilhelm \\
+		Matrikelnummer: 36873\\
+		Wintersemester 2013/2014}
+\publishers{
+    \textbf{Betreuer:} Prof. Dr. Martin Sulzmann
+}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Einleitung}
+
+
+\subsection{Vorwort}
+
+Lorem.
+
+\newpage
+\section{Zusammenfassung und Fazit}
+
+Lorem. \cite{scalalang}
+
+\newpage
+
+\section{Quellen- und Literaturverzeichnis}
+
+\bibliographystyle{plain}
+\bibliography{seminararbeit_florian_wilhelm_36873}
+
+\section{Abbildungs- und Tabellenverzeichnis}
+
+\renewcommand{\listfigurename}{Verzeichnis der Abbildungen}
+\listoffigures
+
+\newpage
+
+\printglossary
+
+\end{document}
