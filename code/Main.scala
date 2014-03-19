@@ -21,9 +21,12 @@ object Main {
       }
     }
 
-    f onComplete {
-      case Success(value) => println("We have the answer! It's " + value)
-      case Failure(e) => e.printStackTrace
+    f onSuccess {
+      case value => println("We have the answer! It's " + value)
+    }
+
+    f onFailure {
+      case e => e.printStackTrace
     }
 
     // do the rest of your work
