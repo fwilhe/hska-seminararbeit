@@ -10,19 +10,29 @@ object Main {
 
   def main(args: Array[String]) {
 
-    val f: Future[Int] = future {
+    val exchangeRate: Future[Int] = future {
       Thread.sleep(Random.nextInt(500))
 
       // sometimes things work, sometimes they don't...
-      if (Random.nextInt(6) < 3) {
-        42
-      } else {
-        throw new Exception
-      }
+//      if (Random.nextInt(6) < 4) {
+        Random.nextInt(100) 
+//      } else {
+//        throw new Exception
+//      }
     }
 
-    f onComplete {
-      case Success(value) => println("The answer is: " + value)
+    exchangeRate onComplete {
+      case Success(value) => {
+        val bookFlight: Future[Int] = future {
+          Thread.sleep(1000)
+          1
+        }
+
+        bookFlight onSuccess {
+          case msg => println("We can fly to hawaii now! \\o/")
+        }
+      }
+
       case Failure(e) => println("Ooops, an error occured.")
     }
 
@@ -35,6 +45,6 @@ object Main {
     println("F ..."); Thread.sleep(100)
 
     // keep the jvm running
-    Thread.sleep(2000)
+    Thread.sleep(3000)
   }
 }
