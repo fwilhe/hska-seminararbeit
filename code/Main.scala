@@ -8,25 +8,7 @@ import scala.util.Random
 
 object Main {
 
-  def doSomeWork() {
-    println("A ..."); Thread.sleep(100)
-    println("B ..."); Thread.sleep(100)
-    println("C ..."); Thread.sleep(100)
-    println("D ..."); Thread.sleep(100)
-    println("E ..."); Thread.sleep(100)
-    println("F ..."); Thread.sleep(100)
-  }
-  
-  def isProfitable(quote): Boolean {
-    if ((quote) > 40) {
-      true
-    } else {
-      false
-    }
-  }
-
-  def main(args: Array[String]) {
-
+  def futureDemo() {
     println("Trying to get the exchange-rate")
     val exchangeRate: Future[Int] = future {
       Thread.sleep(Random.nextInt(500))
@@ -59,6 +41,24 @@ object Main {
     doSomeWork()
 
     // keep the jvm running
-    Thread.sleep(3000)
+    Thread.sleep(3000)  
+  }
+
+  def doSomeWork() {
+    println("A ..."); Thread.sleep(100)
+    println("B ..."); Thread.sleep(100)
+    println("C ..."); Thread.sleep(100)
+    println("D ..."); Thread.sleep(100)
+    println("E ..."); Thread.sleep(100)
+    println("F ..."); Thread.sleep(100)
+  }
+  
+  def promiseDemo() {
+  
+  }
+
+  def main(args: Array[String]) {
+    //futureDemo()
+    promiseDemo()
   }
 }
