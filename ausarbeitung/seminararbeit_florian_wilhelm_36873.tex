@@ -34,7 +34,7 @@
 %
 % Glossar
 %
-\newglossaryentry{sip}{name={Scala Improvement Process}, description={ist eine Platform auf der Verbesserungen der Programmiersprache Scala vorgestellt werden. Sie ist unter \url{http://docs.scala-lang.org/sips/} zu erreichen.}}
+\newglossaryentry{sip}{name={Scala Improvement Process}, description={ist eine Platform auf der Verbesserungen der Programmiersprache Scala vorgestellt werden. Es ist notwendig ein SIP-Dokument einzureichen, wenn man die Sprache oder die Standardbibliothek erweitern möchte. Die Plattform ist unter \url{http://docs.scala-lang.org/sips/} zu erreichen}}
 
 % Template: \newglossaryentry{yyy}{name=xxx, description={}} 
 
@@ -68,15 +68,20 @@
 \newpage
 
 \section{Einleitung}
-
 \subsection{Vorwort}
 
 Ziel dieser Arbeit ist es, das Konstrukt der Futures und Promises zu untersuchen.
 Dabei wird die Implementierung in der Programmiersprache Scala herangezogen.
 
-Futures und Promises gehen zurück auf die Sprachen XXX, YYY und ZZZ. Sie sind
+Futures und Promises gehen zurück auf die Sprachen 
+\emph{Mozart Programming System}, \emph{Alice} und \emph{MultiLisp}. Sie sind
 heute in einer Vielzahl von Sprachen verfügbar, oftmals durch drittanbieter
 Bibliotheken.
+
+%TODO http://www.ps.uni-saarland.de/alice/manual/futures.html
+%TODO http://mozart.github.io/publications/abstracts/oz-futures.html
+
+Der vollständige Code dieser Seminararbeit ist unter \cite{code} verfügbar.
 
 \subsubsection{Scala}
 
@@ -89,10 +94,19 @@ leistet Pionierarbeit für das Java-Ökosystem, in dem sie Features implementier
 die von Java übernommen werden. Als Beispiel sei auf die Lambda-Ausdrücke in
 Java 8 verwiesen.
 
-Sie findet auch in der Industrie anwendung, so wird es zum Beispiel von Twitter,
+Die Sprache findet auch in der Industrie Anwendung, so wird sie unter Anderem von Twitter,
 Sony und Foursquare eingesetzt (vgl. \cite{scalaInEnterprise}).
 
+Ein starker Fokus liegt darauf, nebenläufige Programmierung in der Multicore-Ära
+zu ermöglichen. Erreicht wird dies durch Sprachkonstrukte wie \emph{Actors},
+\emph{Futures} und \emph{Promises}.
+
+
 \section{Futures und Promises}
+
+Erste erwähnung: \cite{Baker:1977:IGC:872734.806932}
+
+Basis für Implementierung in Scala: \cite{Lea:2000:JFF:337449.337465}
 
 Futures und Promises sind für Scala beschrieben in dem \gls{sip}-Dokument 
 \cite{sip14}.

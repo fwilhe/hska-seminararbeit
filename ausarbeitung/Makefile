@@ -21,3 +21,6 @@ cleanall:
 #Only for spell-checking!
 wordfile:
 	pandoc -s $(DOCUMENT).tex -o $(DOCUMENT).docx
+	
+run:
+	xdg-open $(DOCUMENT).pdf
