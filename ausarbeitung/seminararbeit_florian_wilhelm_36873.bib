@@ -34,6 +34,13 @@
   year = {2009 }, 
   note = "[Online; zuletzt abgerufen am \today]"
 }
+@misc{scalaConcurrentCode,
+  author = {École Polytechnique Fédérale de Lausanne},
+  title = {{Scala Concurrent Sourcecode}},
+  howpublished = "\url{https://github.com/scala/scala/tree/master/src/library/scala/concurrent}",
+  year = {2014 }, 
+  note = "[Online; zuletzt abgerufen am \today]"
+}
 @article{Baker:1977:IGC:872734.806932,
  author = {Baker,Jr., Henry C. and Hewitt, Carl},
  title = {The Incremental Garbage Collection of Processes},
@@ -69,3 +76,30 @@ Multiprocessing systems, Processor scheduling},
  publisher = {ACM},
  address = {New York, NY, USA},
 }
+@misc{aliceFuture,
+  author = {Universität des Saarlandes},
+  title = {{futures}},
+  howpublished = "\url{http://www.ps.uni-saarland.de/alice/manual/futures.html}",
+  year = {2004 }, 
+  note = "[Online; zuletzt abgerufen am \today]"
+}
+@TECHREPORT{futures:98,
+  title = {Futures and By-need Synchronization},
+  year = {1998},
+  author = {Michael Mehl and Christian Schulte and Gert Smolka},
+  abstract = {We propose a conservative extension of Oz that adds futures and   by-need synchronization. Futures are read-only views of logic
+   variables that make it possible to statically limit the scope in
+   which a variable can be constrained. For instance, one can
+   express with futures safe streams that cannot be assigned by
+   their readers. By-need synchronization makes it possible to
+   synchronize a thread on the event that a thread blocks on a
+   future. It is used to express dynamic linking and lazy
+   functions.},
+  note = {DRAFT},
+  institution = {Programming Systems Lab, DFKI and Universit{\"a}t des Saarlandes},
+  month = may,
+  sline = {3383},
+  project-key = {C1},
+  label = {oz-futures}
+}
+
