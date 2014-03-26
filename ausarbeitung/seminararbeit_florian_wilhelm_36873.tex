@@ -35,7 +35,7 @@
 % Glossar
 %
 \newglossaryentry{sip}{name={Scala Improvement Process}, description={ist eine Platform auf der Verbesserungen der Programmiersprache Scala vorgestellt werden. Es ist notwendig ein SIP-Dokument einzureichen, wenn man die Sprache oder die Standardbibliothek erweitern möchte. Die Plattform ist unter \url{http://docs.scala-lang.org/sips/} zu erreichen}}
-
+\newglossaryentry{lazy}{name=Lazy evaluation, description={bedeutet, dass eine Berechnung erst dann ausgeführt wird, wenn sie benötigt wird}}
 % Template: \newglossaryentry{yyy}{name=xxx, description={}} 
 
 %
@@ -94,6 +94,8 @@ leistet Pionierarbeit für das Java-Ökosystem, in dem sie Features implementier
 die von Java übernommen werden. Als Beispiel sei auf die Lambda-Ausdrücke in
 Java 8 verwiesen.
 
+%Traits beschreiben, weil F und P auch welche sind
+
 Die Sprache findet auch in der Industrie Anwendung, so wird sie unter Anderem von Twitter,
 Sony und Foursquare eingesetzt (vgl. \cite{scalaInEnterprise}).
 
@@ -109,9 +111,42 @@ zu ermöglichen. Erreicht wird dies durch Sprachkonstrukte wie \emph{Actors},
 Die erste Erwähnung von Futures geht zurück auf das Jahr 1977 
 (Siehe \cite{Baker:1977:IGC:872734.806932}).
 
-Implementierung in Mozart \cite{aliceFuture}
+Futures werden beschrieben als Sprachkonstrukte, die asynchron laufen. Sie 
+könnten zum Beispiel in der Form 
+\begin{lstlisting}
+(ENTWEDER <ausdruck_1> <ausdruck_2> .. <ausdruck_n>)
+\end{lstlisting}
+angegeben werden. Diese Notation sollte alle n Ausdrücke nebenläufig ausführen, 
+die Rückgabe sollte die des ersten Ausdrucks sein, der ein Ergebnis zurückliefert.
+Dabei war es die Idee, jeden Ausdruck auf einem eigenen Prozessor auszuführen, 
+wenigstens aber alle Ausdrücke auf mehrere Prozessoren zu verteilen. Hier ist in 
+einem 1977 veröffentlichten Papier bereits eine zentrale Problemstellung der 
+heutigen Zeit beschrieben: Die effiziente Softwareentwicklung in der Multicore-Ära.
 
-Implementierung in Alice \cite{futures:98}
+Der theoretische Anspruch in diesem Dokument wird im Fazit deutlich, in dem klar 
+gesagt wird, dass keine Hardware verfügbar sei auf der diese Ideen umgesetzt 
+werden könnten.
+
+Implementierung in Mozart \cite{futures:98}
+
+Implementierung in Alice 
+\cite{aliceFuture}
+
+Im Handbuch der Programmiersprache \emph{Alice} werden Futures folgendermaßen
+beschrieben:
+\begin{quote}
+Ein \emph{future} ist ein Platzhalter für das unbestimmte Resultat einer
+(nebenläufigen) Berechnung. Wenn die Berechnung ein Ergebnis liefert, dann
+wird der Wert der \emph{future} im globalen Kontext durch dieses ersetzt.
+Dieser Wert kann selbst ein \emph{future} sein.
+\end{quote} (Sinngemäß aus dem Englischen übersetzt)
+
+\emph{Futures} in \emph{Alice} können mittels \gls{lazy} berechnet werden. 
+Dies muss durch die Verwendung des \emph{lazy}-Schlüsselwortes explizit angefordert werden.
+
+In diesem Handbuch werden auch \emph{Promises} erwähnt, wobei diese eine Variante
+der \emph{Futures} darstellen. In \emph{Alice} wird mit jedem \emph{Promise}
+ein neuer \emph{Future} erzeugt.
 
 Basis für Implementierung in Scala: \cite{Lea:2000:JFF:337449.337465}
 
