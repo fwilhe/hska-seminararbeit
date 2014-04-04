@@ -29,8 +29,9 @@ object Main {
     println("δ ..."); Thread.sleep(100)
   }
 
-  def doSomethingWithResult() {
+  def doSomethingWithResult(result: Integer) {
     println("** doSomethingWithResult **")
+    println("The result is: " + result)
   }
 
   def main(args: Array[String]) {
@@ -39,17 +40,24 @@ object Main {
 
     val producer = future {
       val r = produceSomething()
-      p success r
+      p.success(r)
       continueDoingSomethingUnrelated()
     }
+    
+    
 
     val consumer = future {
       startDoingSomething()
-      f onSuccess {
-        case r => doSomethingWithResult()
+      f.onSuccess {
+        case r => doSomethingWithResult(r)
       }
     }
-
+    
+    // Doing this would cause an execption because the promise has already
+    // been completed.
+    // Thread.sleep(1000)
+    // p.success(23)
+    
     // keep the jvm running
     Thread.sleep(3000)
   }
