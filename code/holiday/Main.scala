@@ -3,7 +3,7 @@ package de.hska.wifl1011.seminararbeit
 import scala.concurrent.future
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success }
 import scala.util.Random
 
 object Main {
@@ -24,7 +24,7 @@ object Main {
 
       // sometimes things work, sometimes they don't...
       if (Random.nextInt(6) < 4) {
-        Random.nextInt(100) 
+        Random.nextInt(100)
       } else {
         throw new Exception
       }
@@ -50,6 +50,6 @@ object Main {
     doSomeWork()
 
     // keep the jvm running
-    Thread.sleep(3000)  
+    Thread.sleep(3000)
   }
 }
