@@ -167,9 +167,59 @@ Basis für Implementierung in Scala: \cite{Lea:2000:JFF:337449.337465}
 Futures und Promises sind für Scala beschrieben in dem \gls{sip}-Dokument SIP-14 
 (vgl. \cite{sip14}).
 
-Die Imlementierung in Scala kann unter \cite{scalaConcurrentCode} abgerufen werden.
-%TODO https://github.com/scala/scala/blob/master/src/library/scala/concurrent/Future.scala
-%TODO https://github.com/scala/scala/blob/master/src/library/scala/concurrent/Promise.scala
+Es gab bereits seit längerem verschiedene Implementierungen dieser Sprachmittel,
+unter anderem im AKKA-Framework, in Skalaz, in den Twitter-Util-Klassen so wie
+in java.util.concurrent (vgl. \cite{futuresTry}).
+
+Um der Fragmentierung im Umfeld der Programmiersprache entgegenzuwirken und
+diese Techniken für alle Scala-Entwickler zugänglich zu machen wurde auf Basis
+des \gls{sip}-Dokuments SIP-14 eine Implementierung im scala.concurrent-Package
+vorgenommen.
+
+Im SIP-14 wird ein Future wie folgt beschrieben:
+\begin{quote}
+Futures provide a nice way to reason about performing many operations in 
+parallel– in an efficient and non-blocking way. The idea is simple, a Future 
+is a sort of placeholder object that you can create for a result that doesn’t 
+yet exist. Generally, the result of the Future is computed concurrently and can 
+be later collected. Composing concurrent tasks in this way tends to result in 
+faster, asynchronous, non-blocking parallel code.
+
+A Future object either holds a result of a computation or an 
+exception in the case that the computation failed.
+\end{quote}
+
+Es ist also hervorzuheben, dass Futures nicht blockieren, im Hauptprogramm
+kann sinnvoll gearbeitet werden wärend der Wert des Futures berechnet wird.
+Somit wird es vergleichsweise einfach, Code zu schreiben der auf mehreren
+Prozessoren gleichzeitig ausgeführt werden kann.
+
+Ein Future in Scala ist ein nur-lese-Wert.
+
+Ein Promise hingegen wird im SIP-14 folgendermaßen beschrieben:
+\begin{quote}
+A promise can be thought of as a writeable, single-assignment container, which 
+completes a future. That is, a promise can be used to successfully complete a 
+future with a value (by \glqq completing\grqq the promise) using the \texttt{success} method. 
+Conversely, a promise can also be used to complete a future with an exception, 
+by failing the promise, using the \texttt{failure} method.
+\end{quote}
+
+Ein Promise ist also ein \glqq Container\grqq in den genau einmal geschrieben
+werden kann. Entweder den Wert den der zugehörige Future errechnet hat
+(womit sinnbildlich das Versprechen eingelöst wird) oder mit einer Exception
+(womit das Versprechen gebrochen wird).
+
+Ein Promise beinhaltet immer einen Future. Umgekehrt gilt diese Aussage nicht.
+
+Da es sich bei Scala um freie Software handelt ist diese Implementierung
+unter \cite{scalaConcurrentCode} verfügbar.
+
+\section{Einfache Beispiele für Futures und Promises}
+
+\subsection{Future}
+
+\subsection{Promise}
 
 \section{Anwendungsfälle für Futures und Promises}
 
@@ -180,8 +230,8 @@ verdeutlicht werden.
 
 Nehmen wir an, die Urlaubsplanung steht vor der Tür. Es ist natürlich wichtig
 zu wissen, wie der Wechselkurs der Währung des Landes steht, in dem wir uns
-erholen möchten. Wenn der Wechselkurz allzu nachteilhaft für uns steht,
-dann verzichten wir lieber auf einen Urlaub zu diesem Zeitpunkt und erkundigen
+erholen möchten. Wenn der Wechselkurs allzu nachteilhaft für uns ist
+verzichten wir lieber auf einen Urlaub zu diesem Zeitpunkt und erkundigen
 uns im nächsten Jahr nocheinmal.
 
 Im Beispiel verwenden wir zwei Futures: Einen um den Wechelkurs zu bestimmen,
