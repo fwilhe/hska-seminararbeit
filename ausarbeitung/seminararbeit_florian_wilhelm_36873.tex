@@ -94,10 +94,22 @@ leistet Pionierarbeit für das Java-Ökosystem, in dem sie Features implementier
 die von Java übernommen werden. Als Beispiel sei auf die Lambda-Ausdrücke in
 Java 8 verwiesen.
 
-%Traits beschreiben, weil F und P auch welche sind
+Ein weiteres Sprachmerkmal von Scala sind \emph{Traits}, was mit 
+\glqq Charakterzug\grqq übersetzt werden kann. Dabei handelt es sich im
+Wesentlichen um Interfaces, in denen Methoden implementiert werden können.
+Klassen können sich mehrere dieser \glqq Charakterzüge\grqq aneignen.
+So ist es möglich ein Verhalten zu erzeugen das dem von Sprachen ähnelt die
+Merfachvererbung unterstützen ohne die zum Beispiel von \emph{C++} bekannten
+Probleme zu erhalten.
+
+Java 8 zieht auch hier nach und bietet mit \emph{default}-Methoden in Interfaces
+ähnliches an.
 
 Die Sprache findet auch in der Industrie Anwendung, so wird sie unter Anderem von Twitter,
 Sony und Foursquare eingesetzt (vgl. \cite{scalaInEnterprise}).
+
+Ähnlich wie zum Beispiel \emph{Erlang} bietet sich Scala vor allem dort an,
+wo mit vielen nicht vorhersehbaren Ereignissen umzugehen ist.
 
 Ein starker Fokus liegt darauf, nebenläufige Programmierung in der Multicore-Ära
 zu ermöglichen. Erreicht wird dies durch Sprachkonstrukte wie \emph{Actors},
@@ -161,7 +173,29 @@ Die Imlementierung in Scala kann unter \cite{scalaConcurrentCode} abgerufen werd
 
 \section{Anwendungsfälle für Futures und Promises}
 
+Anhand von mehreren Anwendungsfällen soll der Nutzen von Futures und Promises
+verdeutlicht werden. 
+
 \subsection{Ein Urlaub in der Südsee}
+
+Nehmen wir an, die Urlaubsplanung steht vor der Tür. Es ist natürlich wichtig
+zu wissen, wie der Wechselkurs der Währung des Landes steht, in dem wir uns
+erholen möchten. Wenn der Wechselkurz allzu nachteilhaft für uns steht,
+dann verzichten wir lieber auf einen Urlaub zu diesem Zeitpunkt und erkundigen
+uns im nächsten Jahr nocheinmal.
+
+Im Beispiel verwenden wir zwei Futures: Einen um den Wechelkurs zu bestimmen,
+und einen um den Flug zu buchen. In beiden Futures wird mittels der Zufallsfunktion
+die Möglichkeit simuliert, dass die Anfrage fehl schlägt, zum Beispiel weil
+die Onlineservices nicht verfügbar sind. Solche Fehlerzustände sind ein elementarer
+Bestandteil von Futures in Scala.
+
+\lstinputlisting
+    [caption={Code zum Anwendungsfall \glqq Ein Urlaub in der Südsee\grqq },
+       label = lst:scala_holiday,
+       captionpos=b]
+ {../code/holiday/Main.scala}
+ 
 
 \subsection{...}
 \subsection{...}
