@@ -36,6 +36,13 @@
 %
 \newglossaryentry{sip}{name={Scala Improvement Process}, description={ist eine Platform auf der Verbesserungen der Programmiersprache Scala vorgestellt werden. Es ist notwendig ein SIP-Dokument einzureichen, wenn man die Sprache oder die Standardbibliothek erweitern möchte. Die Plattform ist unter \url{http://docs.scala-lang.org/sips/} zu erreichen}}
 \newglossaryentry{lazy}{name=Lazy evaluation, description={bedeutet, dass eine Berechnung erst dann ausgeführt wird, wenn sie benötigt wird}}
+\newglossaryentry{nebenlaeufig}{name=Nebenläufigkeit, description={todo}} 
+\newglossaryentry{lambda}{name=Lambda-Ausdrücke, description={todo}} 
+%\newglossaryentry{yyy}{name=xxx, description={}} 
+%\newglossaryentry{yyy}{name=xxx, description={}} 
+%\newglossaryentry{yyy}{name=xxx, description={}} 
+%\newglossaryentry{yyy}{name=xxx, description={}} 
+%\newglossaryentry{yyy}{name=xxx, description={}} 
 % Template: \newglossaryentry{yyy}{name=xxx, description={}} 
 
 %
@@ -91,7 +98,7 @@ Sprache bleiben.
 
 Scala ist eine objektorientierte und funktionale Sprache für die JVM. Sie
 leistet Pionierarbeit für das Java-Ökosystem, in dem sie Features implementiert
-die von Java übernommen werden. Als Beispiel sei auf die Lambda-Ausdrücke in
+die von Java übernommen werden. Als Beispiel sei auf die \gls{lambda} in
 Java 8 verwiesen.
 
 Ein weiteres Sprachmerkmal von Scala sind \emph{Traits}, was mit 
@@ -111,7 +118,7 @@ Sony und Foursquare eingesetzt (vgl. \cite{scalaInEnterprise}).
 Ähnlich wie zum Beispiel \emph{Erlang} bietet sich Scala vor allem dort an,
 wo mit vielen nicht vorhersehbaren Ereignissen umzugehen ist.
 
-Ein starker Fokus liegt darauf, nebenläufige Programmierung in der Multicore-Ära
+Ein starker Fokus liegt darauf, \gls{nebenlaeufig} in der Multicore-Ära
 zu ermöglichen. Erreicht wird dies durch Sprachkonstrukte wie \emph{Actors},
 \emph{Futures} und \emph{Promises}.
 
@@ -210,16 +217,46 @@ werden kann. Entweder den Wert den der zugehörige Future errechnet hat
 (womit sinnbildlich das Versprechen eingelöst wird) oder mit einer Exception
 (womit das Versprechen gebrochen wird).
 
-Ein Promise beinhaltet immer einen Future. Umgekehrt gilt diese Aussage nicht.
+Ein Promise beinhaltet immer einen Future. Ein Future kann aber ohne Promise
+existieren.
 
 Da es sich bei Scala um freie Software handelt ist diese Implementierung
 unter \cite{scalaConcurrentCode} verfügbar.
 
 \section{Einfache Beispiele für Futures und Promises}
 
+Die Grundlegende Syntax von Futures und Promises soll hier anhand von minimalen
+Beispielen vorgestellt werden. Diese sind so konzipiert dass sie nichts
+tun, aber direkt lauffähig sind. Um die Beispiele, die unter \cite{code}
+verfügbar sind nachzuvollziehen reicht es im richtigen Verzeichnis 
+\texttt{scalac Main.scala \&\& scala de.hska.wifl1011.seminararbeit.Main} auszuführen.
+
 \subsection{Future}
 
+In Listing \ref{lst:scala_mini_future} ist ein lauffähiges Beispiel für einen 
+Future abgebildet. Im Beispiel tut dieser nichts weiteres als einen konstanten
+Wert zurückzuliefern. Innerhalb dieses Codeblocks kann eine beliebige Berechnung
+ausgeführt werden, die dann nebenläufig zum Main-Thread läuft. Sobald der Future
+erfolgreich beendet ist wir die \texttt{onSuccess}-Methode aufgerufen, in der
+das Ergebnis verarbeitet werden kann. \emph{Erfolgreich} bedeutet in diesem
+Fall dass der Future einen Wert zurückgibt. Die andere Möglichkeit ist, dass
+er eine Exception enthält. Auf diesen Fall könnte man in der \texttt{onFailure}-Methode
+reagieren. Es ist ebenso möglich beide Fälle in einer allgemeineren
+\texttt{onComplete}-Methode zu behandeln.
+
+\lstinputlisting
+    [caption={Code zum Minimalbeispiel eines Futures },
+       label = lst:scala_mini_future,
+       captionpos=b]
+ {../code/minimal/future/Main.scala}
+
 \subsection{Promise}
+
+\lstinputlisting
+    [caption={Code zum Minimalbeispiel eines Promises },
+       label = lst:scala_mini_promise,
+       captionpos=b]
+ {../code/minimal/promise/Main.scala}
 
 \section{Anwendungsfälle für Futures und Promises}
 
@@ -273,7 +310,7 @@ Exception.
 
 \lstinputlisting
     [caption={Code zum Anwendungsfall \glqq Ein Tag auf der Baustelle\grqq },
-       label = lst:scala_holiday,
+       label = lst:scala_constructionsite,
        captionpos=b]
  {../code/constructionsite/Main.scala}
 
@@ -290,7 +327,7 @@ Auch ein solches Verhalten kann mittels Futures simuliert werden.
 
 \lstinputlisting
     [caption={Code zum Anwendungsfall \glqq Ein Unfall\grqq },
-       label = lst:scala_holiday,
+       label = lst:scala_accident,
        captionpos=b]
  {../code/accident/Main.scala}
 
