@@ -247,7 +247,36 @@ Bestandteil von Futures in Scala.
  {../code/holiday/Main.scala}
  
 
-\subsection{...}
+\subsection{Ein Tag auf der Baustelle}
+
+In diesem Beispiel beobachten wir die Arbeit auf einer Baustelle. Wir sehen
+den Meister mit seinem Lehrling. Als die beiden mit der Arbeit beginnen möchten
+fällt Ihnen auf, dass sie den Werkzeugkasten im Auto vergessen haben. Also
+geht der Lehrling los um diesen zu holen.
+
+Da Futures nicht blockierend sind kann der Meister die Zeit nutzen um bereits
+ein paar Messungen vorzunehmen. Sobald der Lehrling mit dem Werkzeugkasten
+zurückkommt unterbricht er diese Arbeit um das richtige Werkzeug zu nehmen.
+Doch auch in diesem Fall gibt es die Möglichkeit, dass das richtige Werkzeug
+für die Aufgabe nicht im Werkzeugkasten ist.
+
+Der Lehrling ist unterdessen schon dabei die Baustelle zu säubern, schließlich
+haben wir keine Zeit zu verlieren.
+
+Mit der Zeile \texttt{myPromise.success(toolbox)} wird das Versprechen,
+den Werkzeugkasten zu holen, eingelöst.
+
+In diesem Beispiel ist schön zu sehen, dass Promises wirklich nur einmal
+beschrieben werden können. Würden wir die auskommentierte Codezeile
+\texttt{myPromise.success(23)} einkommentieren, so erhielten wir eine
+Exception.
+
+\lstinputlisting
+    [caption={Code zum Anwendungsfall \glqq Ein Tag auf der Baustelle\grqq },
+       label = lst:scala_holiday,
+       captionpos=b]
+ {../code/constructionsite/Main.scala}
+
 \subsection{...}
 \subsection{...}
 
