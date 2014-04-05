@@ -10,16 +10,16 @@ object Main {
     val myPromise = promise[Integer]
     val myFuture = myPromise.future
 
-    val producer = future {
+    val apprentice = future {
       val toolbox: Integer = Helper.getToolbox()
       myPromise.success(toolbox) // complete the promise
       Helper.cleanConstructionSite()
     }
 
-    val consumer = future {
+    val craftsman = future {
       Helper.takeMeasurement()
       myFuture.onSuccess {
-        case r: Integer => Helper.pickTheRightTool(r)
+        case toolbox: Integer => Helper.pickTheRightTool(toolbox)
       }
     }
     
