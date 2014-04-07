@@ -82,7 +82,7 @@ Dabei wird die Implementierung in der Programmiersprache Scala herangezogen.
 
 Futures und Promises gehen zurück auf die Sprachen 
 \emph{Mozart Programming System}, \emph{Alice} und \emph{MultiLisp}. Sie sind
-heute in einer Vielzahl von Sprachen verfügbar, oftmals durch drittanbieter
+heute in einer Vielzahl von Sprachen verfügbar, oftmals durch Drittanbieter
 Bibliotheken.
 
 %TODO http://www.ps.uni-saarland.de/alice/manual/futures.html
@@ -102,17 +102,17 @@ die von Java übernommen werden. Als Beispiel sei auf die \gls{lambda} in
 Java 8 verwiesen.
 
 Ein weiteres Sprachmerkmal von Scala sind \emph{Traits}, was mit 
-\glqq Charakterzug\grqq übersetzt werden kann. Dabei handelt es sich im
+\glqq Charakterzug\grqq{} übersetzt werden kann. Dabei handelt es sich im
 Wesentlichen um Interfaces, in denen Methoden implementiert werden können.
-Klassen können sich mehrere dieser \glqq Charakterzüge\grqq aneignen.
-So ist es möglich ein Verhalten zu erzeugen das dem von Sprachen ähnelt die
-Merfachvererbung unterstützen ohne die zum Beispiel von \emph{C++} bekannten
+Klassen können sich mehrere dieser \glqq Charakterzüge\grqq{} aneignen.
+So ist es möglich, ein Verhalten zu erzeugen das dem von Sprachen ähnelt, die
+Mehrfachvererbung unterstützen, ohne die zum Beispiel von \emph{C++} bekannten
 Probleme zu erhalten.
 
 Java 8 zieht auch hier nach und bietet mit \emph{default}-Methoden in Interfaces
 ähnliches an.
 
-Die Sprache findet auch in der Industrie Anwendung, so wird sie unter Anderem von Twitter,
+Die Sprache findet auch in der Industrie Anwendung, so wird sie unter anderem von Twitter,
 Sony und Foursquare eingesetzt (vgl. \cite{scalaInEnterprise}).
 
 Ähnlich wie zum Beispiel \emph{Erlang} bietet sich Scala vor allem dort an,
@@ -146,10 +146,11 @@ Der theoretische Anspruch in diesem Dokument wird im Fazit deutlich, in dem klar
 gesagt wird, dass keine Hardware verfügbar sei auf der diese Ideen umgesetzt 
 werden könnten.
 
-Implementierung in Mozart \cite{futures:98}
+\subsubsection{Implementierung in Mozart \cite{futures:98}}
 
-Implementierung in Alice 
-\cite{aliceFuture}
+TODO
+
+\subsubsection{Implementierung in Alice \cite{aliceFuture}}
 
 Im Handbuch der Programmiersprache \emph{Alice} werden Futures folgendermaßen
 beschrieben:
@@ -169,6 +170,8 @@ ein neuer \emph{Future} erzeugt.
 
 Basis für Implementierung in Scala: \cite{Lea:2000:JFF:337449.337465}
 
+TODO
+
 \subsection{Implementierung in scala.concurrent}
 
 Futures und Promises sind für Scala beschrieben in dem \gls{sip}-Dokument SIP-14 
@@ -179,7 +182,7 @@ unter anderem im AKKA-Framework, in Skalaz, in den Twitter-Util-Klassen so wie
 in java.util.concurrent (vgl. \cite{futuresTry}).
 
 Um der Fragmentierung im Umfeld der Programmiersprache entgegenzuwirken und
-diese Techniken für alle Scala-Entwickler zugänglich zu machen wurde auf Basis
+diese Techniken für alle Scala-Entwickler zugänglich zu machen, wurde auf Basis
 des \gls{sip}-Dokuments SIP-14 eine Implementierung im scala.concurrent-Package
 vorgenommen.
 
@@ -197,7 +200,7 @@ exception in the case that the computation failed.
 \end{quote}
 
 Es ist also hervorzuheben, dass Futures nicht blockieren, im Hauptprogramm
-kann sinnvoll gearbeitet werden wärend der Wert des Futures berechnet wird.
+kann sinnvoll gearbeitet werden während der Wert des Futures berechnet wird.
 Somit wird es vergleichsweise einfach, Code zu schreiben der auf mehreren
 Prozessoren gleichzeitig ausgeführt werden kann.
 
@@ -207,12 +210,12 @@ Ein Promise hingegen wird im SIP-14 folgendermaßen beschrieben:
 \begin{quote}
 A promise can be thought of as a writeable, single-assignment container, which 
 completes a future. That is, a promise can be used to successfully complete a 
-future with a value (by \glqq completing\grqq the promise) using the \texttt{success} method. 
+future with a value (by \glqq completing\grqq{} the promise) using the \texttt{success} method. 
 Conversely, a promise can also be used to complete a future with an exception, 
 by failing the promise, using the \texttt{failure} method.
 \end{quote}
 
-Ein Promise ist also ein \glqq Container\grqq in den genau einmal geschrieben
+Ein Promise ist also ein \glqq Container\grqq{} in den genau einmal geschrieben
 werden kann. Entweder den Wert den der zugehörige Future errechnet hat
 (womit sinnbildlich das Versprechen eingelöst wird) oder mit einer Exception
 (womit das Versprechen gebrochen wird).
@@ -220,7 +223,7 @@ werden kann. Entweder den Wert den der zugehörige Future errechnet hat
 Ein Promise beinhaltet immer einen Future. Ein Future kann aber ohne Promise
 existieren.
 
-Da es sich bei Scala um freie Software handelt ist diese Implementierung
+Da es sich bei Scala um freie Software handelt, ist diese Implementierung
 unter \cite{scalaConcurrentCode} verfügbar.
 
 \section{Einfache Beispiele für Futures und Promises}
@@ -252,6 +255,8 @@ reagieren. Es ist ebenso möglich beide Fälle in einer allgemeineren
 
 \subsection{Promise}
 
+TODO
+
 \lstinputlisting
     [caption={Code zum Minimalbeispiel eines Promises },
        label = lst:scala_mini_promise,
@@ -267,18 +272,18 @@ verdeutlicht werden.
 
 Nehmen wir an, die Urlaubsplanung steht vor der Tür. Es ist natürlich wichtig
 zu wissen, wie der Wechselkurs der Währung des Landes steht, in dem wir uns
-erholen möchten. Wenn der Wechselkurs allzu nachteilhaft für uns ist
+erholen möchten. Wenn der Wechselkurs allzu nachteilhaft für uns ist,
 verzichten wir lieber auf einen Urlaub zu diesem Zeitpunkt und erkundigen
-uns im nächsten Jahr nocheinmal.
+uns im nächsten Jahr noch einmal.
 
-Im Beispiel verwenden wir zwei Futures: Einen um den Wechelkurs zu bestimmen,
+Im Beispiel verwenden wir zwei Futures: Einen um den Wechelkurs zu bestimmen
 und einen um den Flug zu buchen. In beiden Futures wird mittels der Zufallsfunktion
 die Möglichkeit simuliert, dass die Anfrage fehl schlägt, zum Beispiel weil
 die Onlineservices nicht verfügbar sind. Solche Fehlerzustände sind ein elementarer
 Bestandteil von Futures in Scala.
 
 \lstinputlisting
-    [caption={Code zum Anwendungsfall \glqq Ein Urlaub in der Südsee\grqq },
+    [caption={Code zum Anwendungsfall \glqq Ein Urlaub in der Südsee\grqq{} },
        label = lst:scala_holiday,
        captionpos=b]
  {../code/holiday/Main.scala}
@@ -288,17 +293,17 @@ Bestandteil von Futures in Scala.
 
 In diesem Beispiel beobachten wir die Arbeit auf einer Baustelle. Wir sehen
 den Meister mit seinem Lehrling. Als die beiden mit der Arbeit beginnen möchten
-fällt Ihnen auf, dass sie den Werkzeugkasten im Auto vergessen haben. Also
+fällt ihnen auf, dass sie den Werkzeugkasten im Auto vergessen haben. Also
 geht der Lehrling los um diesen zu holen.
 
-Da Futures nicht blockierend sind kann der Meister die Zeit nutzen um bereits
+Da Futures nicht blockierend sind, kann der Meister die Zeit nutzen um bereits
 ein paar Messungen vorzunehmen. Sobald der Lehrling mit dem Werkzeugkasten
 zurückkommt unterbricht er diese Arbeit um das richtige Werkzeug zu nehmen.
 Doch auch in diesem Fall gibt es die Möglichkeit, dass das richtige Werkzeug
 für die Aufgabe nicht im Werkzeugkasten ist.
 
 Der Lehrling ist unterdessen schon dabei die Baustelle zu säubern, schließlich
-haben wir keine Zeit zu verlieren.
+haben sie keine Zeit zu verlieren.
 
 Mit der Zeile \texttt{myPromise.success(toolbox)} wird das Versprechen,
 den Werkzeugkasten zu holen, eingelöst.
@@ -309,7 +314,7 @@ beschrieben werden können. Würden wir die auskommentierte Codezeile
 Exception.
 
 \lstinputlisting
-    [caption={Code zum Anwendungsfall \glqq Ein Tag auf der Baustelle\grqq },
+    [caption={Code zum Anwendungsfall \glqq Ein Tag auf der Baustelle\grqq{} },
        label = lst:scala_constructionsite,
        captionpos=b]
  {../code/constructionsite/Main.scala}
@@ -319,14 +324,14 @@ Exception.
 Wir brechen nun auf zu einem schönen Ausflug bei gutem Wetter. Alles sieht
 nach einem unvergesslichen Tag aus. Doch plötzlich stört ein schwerer Unfall
 die Idylle. Nun haben wir keine Zeit zu verlieren, wir setzen alle Hebel in
-Bewegung um schnell einen Arzt herbei zu schaffen. Dabei ist uns egal welcher
-Weg zum Erfolg führt, und wir nehmen in Kauf dass sich mehrere Notärzte gleichzeitig
+Bewegung um schnell einen Arzt zu rufen. Dabei ist uns egal welcher
+Weg zum Erfolg führt und wir nehmen in Kauf, dass sich mehrere Notärzte gleichzeitig
 auf den Weg machen.
 
 Auch ein solches Verhalten kann mittels Futures simuliert werden.
 
 \lstinputlisting
-    [caption={Code zum Anwendungsfall \glqq Ein Unfall\grqq },
+    [caption={Code zum Anwendungsfall \glqq Ein Unfall\grqq{} },
        label = lst:scala_accident,
        captionpos=b]
  {../code/accident/Main.scala}
