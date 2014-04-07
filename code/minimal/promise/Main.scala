@@ -24,6 +24,6 @@ object Main {
     }
     
     // keep the jvm running
-    Thread.sleep(3000)
+    Thread.sleep(1000)
   }
 }

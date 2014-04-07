@@ -19,12 +19,13 @@ object Main {
     val craftsman = future {
       Helper.takeMeasurement()
       myFuture.onSuccess {
-        case toolbox: Integer => Helper.pickTheRightTool(toolbox)
+        case toolbox: Integer => 
+          Helper.pickTheRightTool(toolbox)
       }
     }
     
-    // Doing this would cause an execption because the promise has already
-    // been completed.
+    // Doing this would cause an execption because the promise
+    // has already been completed.
     // Thread.sleep(1000)
     // myPromise.success(23)
     
