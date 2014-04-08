@@ -36,8 +36,10 @@
 %
 \newglossaryentry{sip}{name={Scala Improvement Process}, description={ist eine Platform auf der Verbesserungen der Programmiersprache Scala vorgestellt werden. Es ist notwendig ein SIP-Dokument einzureichen, wenn man die Sprache oder die Standardbibliothek erweitern möchte. Die Plattform ist unter \url{http://docs.scala-lang.org/sips/} zu erreichen}}
 \newglossaryentry{lazy}{name=Lazy evaluation, description={bedeutet, dass eine Berechnung erst dann ausgeführt wird, wenn sie benötigt wird}}
-\newglossaryentry{nebenlaeufig}{name=Nebenläufigkeit, description={todo}} 
-\newglossaryentry{lambda}{name=Lambda-Ausdrücke, description={todo}} 
+\newglossaryentry{nebenlaeufig}{name=Nebenläufigkeit, description={ bedeutet, dass zwei oder mehr Prozesse \emph{unabhängig} bearbeitet werden können. Es spielt keine Rolle, in welcher Reihenfolge oder ob sie gar gleichzeitig bearbeitet werden. Dabei ist zu beachten, dass Gleichzeitigkeit kein Kriterium für Nebenläufigkeit ist. Wenn Prozesse gleichzeitig ablaufen, so laufen sie \emph{parallel}, was ein Spezialfall der Nebenläufigkeit ist}}
+\newglossaryentry{lambda}{name=Lambda-Ausdrücke, description={ beschreiben \emph{anonyme Funktionen}, also solche Funktionen die nicht explizit mit einem Namen deklariert werden, sondern zum Beispiel als Argumente übergeben werden können. Sie sind eine der großen Neuerungen in der Programmiersprache \emph{Java 8}}} 
+\newglossaryentry{akka}{name=Akka, description={ist eine Programmbibliothek, die es erlaubt nebenläufige, verteilte und fehlertolerante Applikationen auf Basis der Java Virtual Machine zu erstellen. Sie ist erhältlich für Scala und für Java, und stellt seit Scala Version 2.10 die Standardimplementierung für Aktoren. Akka ist unter \url{http://akka.io/} als freie Software erhältlich}}
+\newglossaryentry{erlang}{name=Erlang, description={ist eine funktionale Programmiersprache, die ursprünglich von Ericsson entwickelt wurde. Der Name kann als Kurzform für \emph{Ericsson language} gelesen werden. Sie wird überwiegend im Telekommunikationsbereich eingesetzt. Sie ist unter \url{http://www.erlang.org/} als freie Software verfügbar}}
 %\newglossaryentry{yyy}{name=xxx, description={}} 
 %\newglossaryentry{yyy}{name=xxx, description={}} 
 %\newglossaryentry{yyy}{name=xxx, description={}} 
@@ -115,7 +117,7 @@ Java 8 zieht auch hier nach und bietet mit \emph{default}-Methoden in Interfaces
 Die Sprache findet auch in der Industrie Anwendung, so wird sie unter anderem von Twitter,
 Sony und Foursquare eingesetzt (vgl. \cite{scalaInEnterprise}).
 
-Ähnlich wie zum Beispiel \emph{Erlang} bietet sich Scala vor allem dort an,
+Ähnlich wie zum Beispiel \emph{\gls{erlang}} bietet sich Scala vor allem dort an,
 wo mit vielen nicht vorhersehbaren Ereignissen umzugehen ist.
 
 Ein starker Fokus liegt darauf, \gls{nebenlaeufig} in der Multicore-Ära
@@ -178,7 +180,7 @@ Futures und Promises sind für Scala beschrieben in dem \gls{sip}-Dokument SIP-1
 (vgl. \cite{sip14}).
 
 Es gab bereits seit längerem verschiedene Implementierungen dieser Sprachmittel,
-unter anderem im AKKA-Framework, in Skalaz, in den Twitter-Util-Klassen so wie
+unter anderem im \gls{akka}-Framework, in Skalaz, in den Twitter-Util-Klassen so wie
 in java.util.concurrent (vgl. \cite{futuresTry}).
 
 Um der Fragmentierung im Umfeld der Programmiersprache entgegenzuwirken und
@@ -255,7 +257,11 @@ reagieren. Es ist ebenso möglich beide Fälle in einer allgemeineren
 
 \subsection{Promise}
 
-TODO
+In Listing \ref{lst:scala_mini_promise} ist ein minimales Beispiel für den
+Einsatz eines Promises dargestellt. Es wird so deklariert, dass es einen
+Integer-Wert erwaret. Erfüllen kann man das Promise via der \texttt{success}-Methode.
+Wenn diese aufgerufen wird, dann wird der zum Promise zugehörige Future ausgelöst
+und in seiner \texttt{onSuccess}-Methode kann mit dem Wert weitergearbeitet werden.
 
 \lstinputlisting
     [caption={Code zum Minimalbeispiel eines Promises },
@@ -335,13 +341,36 @@ Auch ein solches Verhalten kann mittels Futures simuliert werden.
        label = lst:scala_accident,
        captionpos=b]
  {../code/accident/Main.scala}
+ 
+Ein möglicher Einsatz für diesen Anwendungsfall könnte es sein, wenn wir von
+einem Webdienst eine Anfrage beantwortet haben möchten. So gibt es zum Beispiel
+verschiedene Anbieter von Kartenmaterial im Internet. Wenn wir nun eine Adresse
+zu einer Geokoordinate umgerechnet haben möchten, so könnten wir alle verfügbaren
+Dienste anfragen, jeden in einem eigenen Future, und auf den reagieren der uns
+als erstes eine Antwort bereit stellt. Gerade unterwegs mit meist relativ schlechter
+Internetverbindung sind Wartezeiten nervig und zu guter Gebrauchstaulichkeit der
+Software gehört zweifelsohne dass sie möglichst schnell eine Antwort liefert.
 
 \subsection{...}
 
 \newpage
 \section{Zusammenfassung und Fazit}
 
-Lorem.
+Die vorliegende Seminararbeit führt am Beispiel einiger Anwendungsfälle vor,
+dass Futures und Promises geeignete Abstraktionsmittel sind um nebenläufig
+zu programmieren. Des weiteren wird gezeigt, dass die Implementierung dieser
+Sprachmittel im \texttt{scala.concurrent}-Package es leicht macht, mit den
+Mitteln zu experimentieren.
+
+Dabei sind diese Ideen, das zeigt \cite{Baker:1977:IGC:872734.806932}, gar nicht
+so jung wie man vielleicht denken möchte. Umso unverständlicher ist es, dass
+sie noch nicht zum Handwerkszeug eines jeden Softwareentwicklers gehören.
+
+Es wird (vor Allem im Zusammenhang mit Aktoren) deutlich, dass die Entwickler
+der Sprache \emph{Scala} und ihrer Standardbibliothek großen Wert darauf legen,
+nebenläufige Programmierung einfach und zugänglich zu machen. Gerade im Hinblick
+auf die immer größere Verbreitung von Mehrkernsystemen kann sich heute kaum ein
+Entwickler vor nebenläufigen Problemstellungen drücken.
 
 \newpage
 
