@@ -5,7 +5,6 @@ DOCUMENT=seminararbeit_florian_wilhelm_36873
 doc:
 	pdflatex $(DOCUMENT).tex
 	bibtex $(DOCUMENT)
-	makeglossaries $(DOCUMENT)
 	pdflatex $(DOCUMENT).tex
 	pdflatex $(DOCUMENT).tex
 
