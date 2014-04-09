@@ -1,1 +1,34 @@
 \section{Futures und Promises}
+
+\subsection{Futures}
+
+Im SIP-14 wird ein \emph{Future} wie folgt beschrieben:
+\begin{quote}
+Futures provide a nice way to reason about performing many operations in 
+parallel– in an efficient and non-blocking way. The idea is simple, a Future 
+is a sort of placeholder object that you can create for a result that doesn’t 
+yet exist. Generally, the result of the Future is computed concurrently and can 
+be later collected. Composing concurrent tasks in this way tends to result in 
+faster, asynchronous, non-blocking parallel code.
+
+A Future object either holds a result of a computation or an 
+exception in the case that the computation failed.
+\end{quote}
+
+% non blocking
+
+
+
+\subsection{Promises}
+
+Ein \emph{Promise} hingegen wird im SIP-14 folgendermaßen beschrieben:
+\begin{quote}
+A promise can be thought of as a writeable, single-assignment container, which 
+completes a future. That is, a promise can be used to successfully complete a 
+future with a value (by \glqq completing\grqq{} the promise) using the \texttt{success} method. 
+Conversely, a promise can also be used to complete a future with an exception, 
+by failing the promise, using the \texttt{failure} method.
+\end{quote}
+
+
+\paragraph{Vergleich} von ..

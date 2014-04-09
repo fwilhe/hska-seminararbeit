@@ -1,1 +1,35 @@
 \section{Einleitung}
+
+Ziel dieser Seminararbeit ist es, die Sprachmittel \emph{Future}
+und \emph{Promise} am Beispiel der Programmiersprache \emph{Scala}
+zu untersuchen. Dabei soll anhand von beispielhaften Anwendungsfällen
+verdeutlicht werden, in welchen Situationen diese Sprachmittel
+hilfreich sind.
+
+Die Programmbeispiele, die in dieser Arbeit vorkommen wurden mit
+\emph{Scala} in Version 2.10.3 geschrieben und getestet. Diese bietet
+eine eigene Implementierung von \emph{Futures} und \emph{Promises}.
+Eine kurze Anleitung zur Verwendung dieser Implementierung findet sich in
+\cite{sip14}.
+
+\emph{Futures} und \emph{Promises} sind mit dem Ziel entworfen worden,
+die nebenläufige Programmierung zu vereinfachen. Nebenläufige Programmierung
+war bereits vor vielen Jahren sinnvoll, um den Prozessor besser auszulasten,
+aber seit Mehrkernsysteme Einzug in unseren Alltag gehalten haben
+ist sie noch wichtiger geworden als zuvor.
+
+Dass es sich bei \emph{Futures} und \emph{Promises} um keine neuen
+Ideen handelt wird deutlich, wenn man \cite{Baker:1977:IGC:872734.806932}
+betrachtet. Bereits im Jahre 1977 wird die grundlegende Idee beschrieben.
+
+\emph{Futures} werden beschrieben als Sprachkonstrukte, die asynchron laufen. Sie 
+könnten zum Beispiel in der Form 
+\begin{lstlisting}
+(ENTWEDER <ausdruck_1> <ausdruck_2> .. <ausdruck_n>)
+\end{lstlisting}
+angegeben werden. Diese Notation sollte alle n Ausdrücke nebenläufig ausführen, 
+die Rückgabe sollte die des ersten Ausdrucks sein, der ein Ergebnis zurückliefert.
+Dabei war es die Idee, jeden Ausdruck auf einem eigenen Prozessor auszuführen, 
+wenigstens aber alle Ausdrücke auf mehrere Prozessoren zu verteilen. Hier ist in 
+einem 1977 veröffentlichten Papier bereits eine zentrale Problemstellung der 
+heutigen Zeit beschrieben: Die effiziente Softwareentwicklung in der Multicore-Ära.

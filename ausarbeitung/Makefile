@@ -12,11 +12,14 @@ fast:
 	pdflatex $(DOCUMENT).tex
 
 clean:
+	rm includes/*aux
 	rm *aux *glg *glo *gls *ist *lof *log *out *toc *pyg *lol *blg *bbl *~
 
-cleanall:
-	rm *aux *glg *glo *gls *ist *lof *log *out *toc *pyg *pdf *lol *blg *bbl *~
 
+cleanall:
+	rm includes/*aux
+	rm *aux *glg *glo *gls *ist *lof *log *out *toc *pyg *pdf *lol *blg *bbl *~
+	
 #Only for spell-checking!
 wordfile:
 	pandoc -s $(DOCUMENT).tex -o $(DOCUMENT).docx
