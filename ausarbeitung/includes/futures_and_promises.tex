@@ -1,5 +1,39 @@
 \section{Futures und Promises}
 
+\subsection{Motivation}
+
+Methodenaufrufe in üblichen Programmiersprachen sind blockierend. Das bedeutet,
+dass das Hauptprogramm so lange blockiert wird, wie der Methodenaufruf läuft.
+So wird in Listing XXX die Methode \texttt{tuEtwas()} eines Objektes aufgerufen.
+
+\begin{lstlisting}
+main() {
+  objekt.tuEtwas()
+  tuEtwasAnderes()
+}
+\end{lstlisting}
+
+Führen wir das Schlüsselwort \texttt{nebenlaeufig} in unseren Pseudocode ein,
+so können wir ausdrücken, dass die aufgerufene Methode nicht blockieren soll,
+sondern dass im Hauptthread weitergearbeitet werden kann.
+
+\begin{lstlisting}
+main() {
+  nebenlaeufig objekt.tuEtwas()
+  tuEtwasAnderes()
+}
+\end{lstlisting}
+
+Nun kann \texttt{tuEtwasAnderes()} \emph{nebenläufig} ausgeführt werden. Damit
+ist es bei mehreren Prozessoren möglich, den Code parallel auszuführen.
+
+Eine Analogie aus dem IT-Umfeld sind Unix-Shells. Wenn zum Beispiel ein
+\texttt{find}-Befehl ausgeführt wird, so blockiert die Shell bis der Befehl
+abgeschlossen ist. Durch Anhängen eines kaufmännischen Undzeichens ist es möglich,
+den Befehl im Hintergrund laufen zu lassen, wodurch es möglich wird im selben
+Terminal weiter zu arbeiten während der Befehl im Hintergrund (also nebenläufig)
+läuft.
+
 \subsection{Futures}
 
 Im SIP-14 wird ein \emph{Future} wie folgt beschrieben:
@@ -31,4 +65,9 @@ by failing the promise, using the \texttt{failure} method.
 \end{quote}
 
 
-\paragraph{Vergleich} von ..
+\paragraph{Vergleich} von \emph{Futures} und \emph{Promises}.
+
+%\begin{tabular}{p{}|p{}|p{}}
+%foo & bar & baz \\
+%foo & bar & baz
+%\end{tabular}
