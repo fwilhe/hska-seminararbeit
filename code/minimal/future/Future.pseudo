@@ -1,0 +1,16 @@
+def main() {
+
+  // create a future which will hold an integer value
+  val f: Future[Integer] = future {
+    // this will run concurrently to the main-thread
+    val result = doSomeComputationHere() 
+    return result  // return the result of the future
+  }
+    
+  f.onSuccess {
+    case value => {
+      // will be called when result is available
+      doSomethingWithResultHere(value)
+    }
+  }
+}
