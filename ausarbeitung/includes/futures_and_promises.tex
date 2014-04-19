@@ -52,6 +52,13 @@ exception in the case that the computation failed.
 % non blocking
 
 
+\paragraph{Einfaches Beispiel in Pseudocode}
+
+\lstinputlisting
+    [caption={Pseudocode zum Minimalbeispiel eines Futures },
+       label = lst:scala_mini_future,
+       captionpos=b]
+ {../code/minimal/future/Future.pseudo}
 
 \subsection{Promises}
 
@@ -65,9 +72,21 @@ by failing the promise, using the \texttt{failure} method.
 \end{quote}
 
 
+\paragraph{Einfaches Beispiel in Pseudocode}
+
+\lstinputlisting
+    [caption={Pseudocode zum Minimalbeispiel eines Promises },
+       label = lst:scala_mini_promise,
+       captionpos=b]
+ {../code/minimal/promise/Promise.pseudo}
+
 \paragraph{Vergleich} von \emph{Futures} und \emph{Promises}.
 
-%\begin{tabular}{p{}|p{}|p{}}
-%foo & bar & baz \\
-%foo & bar & baz
-%\end{tabular}
+\begin{table}[h]
+\begin{tabular}{lllll}
+ & \textbf{Eigenschaft} & \textbf{Future} & \textbf{Promise} &  \\
+ &  &  &  &  \\
+ &  &  &  &  \\
+ &  &  &  & 
+\end{tabular}
+\end{table}
