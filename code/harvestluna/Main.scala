@@ -19,6 +19,7 @@ object Main {
     
     println(cucumbers)
     // cucumbers.filter(() => )
+    // cucumbers.filter((c: Cucumber) => c.bendingInDegree > 20)
     
     Thread.sleep(500)
   }
