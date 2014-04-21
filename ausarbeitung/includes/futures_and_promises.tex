@@ -85,8 +85,21 @@ by failing the promise, using the \texttt{failure} method.
 \begin{table}[h]
 \begin{tabular}{lllll}
  & \textbf{Eigenschaft} & \textbf{Future} & \textbf{Promise} &  \\
+ & Lesbar &  &  &  \\
+ & Schreibbar & Nein & Ja &  \\
+ & Beinhaltet anderen & Nein & Ja &  \\
  &  &  &  &  \\
  &  &  &  &  \\
  &  &  &  & 
 \end{tabular}
 \end{table}
+
+\subsection{Kombinatoren}
+
+Ein Weg um \emph{Futures} und \emph{Promises} noch mächtiger
+zu machen besteht darin, diese zu kombinieren. Dazu gibt es verschiedene
+Möglichkeiten.
+
+% carcare for yield
+
+% andThen, foldLeft, flatMap, foreach and filter
