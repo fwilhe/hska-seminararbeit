@@ -19,24 +19,23 @@ object Main {
   }
   
   def changeTires() {
+    // use "for"-statement to combine futures. "replaceTire()" depends
+    // on "getNewTireAsFuture()"
     for {
       tire <- getNewTireAsFuture()
       success <- replaceTire(tire)
     } yield println("got response " + success)
   }
   
-  def doSomeWork() {
-    println("A ..."); Thread.sleep(100)
-    println("B ..."); Thread.sleep(100)
-    println("C ..."); Thread.sleep(100)
-    println("D ..."); Thread.sleep(100)
-    println("E ..."); Thread.sleep(100)
-    println("F ..."); Thread.sleep(100)
+  def cleanCar() {
+    println("cleaning ..."); Thread.sleep(100)
+    println("cleaning ..."); Thread.sleep(100)
+    println("cleaning ..."); Thread.sleep(100)
   }
 
   def main(args: Array[String]) {
     changeTires()
-    doSomeWork()
+    cleanCar()
     
     Thread.sleep(500)
   }
