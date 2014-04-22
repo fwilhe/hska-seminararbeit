@@ -23,7 +23,11 @@ object Helper {
   def bookFlightOnline(): Future[Boolean] = future {
     Thread.sleep(Random.nextInt(100))
     Random.nextInt(6) < 5
-     
+  } 
+  
+  def bookAccommodationOnline(): Future[Boolean] = future {
+    Thread.sleep(Random.nextInt(100))
+    Random.nextInt(6) < 5
   }
   
   def getExchangeRateByFuture(currency: String): Future[Double] = future {

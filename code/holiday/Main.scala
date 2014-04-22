@@ -19,19 +19,30 @@ object Main {
       
     val rates = List(rateDollar, rateFranc, ratePound)
 
-    val f = Future.firstCompletedOf(rates) 
+    val firstCompletedRateFuture = Future.firstCompletedOf(rates) 
 
-    f.andThen {
-      case Success(rate) => {
-        //TODO woher weiß ich welcher Future das jetzt ist?
-        println("The rate is: " + rate)
-        val bookFlight: Future[Boolean] = Helper.bookFlightOnline()
-        
-        bookFlight.onSuccess {
-          case successful: Boolean => println("Flight booked")
+    val bookAccommodation = firstCompletedRateFuture.map {
+      rate => {
+        println("Got exchange-rate. It is " + rate)
+        if (Helper.isExchangeRateAcceptable(rate)) {
+          println("Book accommodation")
+          Helper.bookAccommodationOnline()
+        } else {
+          throw new Exception("not profitable")
         }
       }
-    }      
+    }    
+    
+    val bookFlight = bookAccommodation.map {
+      successful => {
+        println("Book flight")
+        Helper.bookFlightOnline()
+      }
+    }
+    
+    bookFlight.onSuccess {
+      case _ => println("Flight booked")
+    }
 
     // do the rest of your work
     Helper.doSomeWork()
