@@ -14,12 +14,7 @@ object Main {
     val rateFranc: Future[Double] = 
       Helper.getExchangeRateByFuture("Swiss franc")
       
-    val ratePound: Future[Double] = 
-      Helper.getExchangeRateByFuture("Pound sterling")
-      
-    val rates = List(rateDollar, rateFranc, ratePound)
-
-    val firstCompletedRateFuture = Future.firstCompletedOf(rates) 
+    val firstCompletedRateFuture = rateDollar.fallbackTo(rateFranc)
 
     val bookAccommodation = firstCompletedRateFuture.map {
       rate => {
