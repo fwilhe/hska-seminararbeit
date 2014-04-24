@@ -1,0 +1,32 @@
+val rateDollar: Future[Double] = 
+  getExchangeRateByFuture("US-Dollar")
+val rateFranc: Future[Double] = 
+  getExchangeRateByFuture("Swiss franc")
+
+val selectedRate = rateDollar.fallbackTo(rateFranc)
+
+val bookAccommodation = selectedRate.map {
+  rate => {
+    println("Got exchange-rate. It is " + rate)
+    if (isExchangeRateAcceptable(rate)) {
+      println("Book accommodation")
+      bookAccommodationOnline()
+    } else {
+      throw new Exception("Rate not acceptable")
+    }
+  }
+}    
+
+val bookFlight = bookAccommodation.map {
+  successful => {
+    println("Book flight")
+    bookFlightOnline()
+  }
+}
+
+bookFlight.onComplete {
+  case Success(_) => println("Flight booked")
+  case Failure(ex) => println(ex.getMessage)
+}
+
+packSuitcase()

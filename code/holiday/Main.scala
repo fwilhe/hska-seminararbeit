@@ -14,16 +14,16 @@ object Main {
     val rateFranc: Future[Double] = 
       Helper.getExchangeRateByFuture("Swiss franc")
       
-    val firstCompletedRateFuture = rateDollar.fallbackTo(rateFranc)
+    val selectedRate = rateDollar.fallbackTo(rateFranc)
 
-    val bookAccommodation = firstCompletedRateFuture.map {
+    val bookAccommodation = selectedRate.map {
       rate => {
         println("Got exchange-rate. It is " + rate)
         if (Helper.isExchangeRateAcceptable(rate)) {
           println("Book accommodation")
           Helper.bookAccommodationOnline()
         } else {
-          throw new Exception("not profitable")
+          throw new Exception("Rate not acceptable")
         }
       }
     }    
@@ -35,12 +35,13 @@ object Main {
       }
     }
     
-    bookFlight.onSuccess {
-      case _ => println("Flight booked")
+    bookFlight.onComplete {
+      case Success(_) => println("Flight booked")
+      case Failure(ex) => println(ex.getMessage)
     }
 
-    // do the rest of your work
-    Helper.doSomeWork()
+    // do some unrelated work
+    Helper.packSuitcase()
 
     // keep the jvm running
     Thread.sleep(3000)

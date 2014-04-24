@@ -5,13 +5,13 @@ import scala.concurrent.{ future, Future }
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object Helper {
-  def doSomeWork() {
-    println("A ..."); Thread.sleep(100)
-    println("B ..."); Thread.sleep(100)
-    println("C ..."); Thread.sleep(100)
-    println("D ..."); Thread.sleep(100)
-    println("E ..."); Thread.sleep(100)
-    println("F ..."); Thread.sleep(100)
+  def packSuitcase() {
+    println("Packing suitcase ..."); Thread.sleep(100)
+    println("Packing suitcase ..."); Thread.sleep(100)
+    println("Packing suitcase ..."); Thread.sleep(100)
+    println("Packing suitcase ..."); Thread.sleep(100)
+    println("Packing suitcase ..."); Thread.sleep(100)
+    println("Packing suitcase ..."); Thread.sleep(100)
   }
   
   def isExchangeServiceOnline() = Random.nextInt(6) < 4
