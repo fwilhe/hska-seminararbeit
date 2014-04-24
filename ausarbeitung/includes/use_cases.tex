@@ -1,5 +1,80 @@
 \section{Anwendungsfälle}
 
+In diesem Kapitel werden verschiedene Anwendungsfälle geschildert.
+Diese sollen der Illustration der Verwendung von \emph{Futures} und
+\emph{Promises} dienen.
+
 \subsection{Urlaubsplanung}
 
+Dieser Anwendungsfall illustriert die Verwendung und Kombination
+von \emph{Futures}.
+
+\paragraph{Szenario}
+
+Es wird ein Urlaub geplant. Dabei gibt es drei Dinge, die erledigt
+werden müssen. Es muss der \emph{Wechselkurs} der Währung des
+Reiseziels ermittelt werden. Wenn dies geschehen ist muss ein
+\emph{Hotelzimmer} gebucht werden. Als letzter Schritt muss der
+\emph{Flug} gebucht werden. Eine von den drei zuvor genannten
+Schritten unabhängige Tätigkeit ist das Packen der Koffer. Während
+also zum Beispiel auf die Antwort des Servers der Bank gewartet wird
+kann an dieser Stelle sinnvolle Arbeit geschehen.
+
+Für jeden dieser Schritte gibt es eine gewisse Wahrscheinlichkeit
+dass er nicht erfolgreich ist. So kann es zum Beispiel passieren,
+dass der Server zum Abfragen der Wechselkursen nicht online ist.
+
+Ein weiteres Risiko im Umgang mit Fremdwährungen ist es, dass der
+Wechselkurs sehr ungünstig ist. Für diesen Fall ist es eine Option
+sich ein zweites Reiseziel offen zu halten. Es besteht zwar nach wie
+vor die Gefahr dass beide Währungen nicht zu hinnehmbaren Kursen
+erhältlich sind, aber dieser Fall soll hier nicht betrachtet werden.
+
+Ebenso gibt es bei der Buchung von Hotelzimmer und Flug eine gewisse
+Wahrscheinlichkeit eines technischen Fehlers.
+
+Sollte einer dieser Fehlerzustände eintreten, so kann dies mit
+\emph{Futures} modelliert werden in dem diese eine Exception
+statt eines zu erwartenden Wertes enthalten.
+
+\paragraph{Pseudocode} für diesen Anwendungsfall:
+
+\lstinputlisting
+    [caption={Code zum Anwendungsfall \glqq Urlaubsplanung\grqq{} },
+       label = lst:holiday,
+       captionpos=b]
+ {../code/holiday/Holiday.pseudo}
+ 
+\paragraph{Diskussion des Codes}
+
+In diesem Programm werden zwei \emph{Futures} erzugt, die jeweils
+den Wechselkurs für eine Währung enthalten. Mittels der
+\texttt{fallbackTo}-Methode wird eine Währung ausgewählt.
+Das \emph{rateDollar}-Objekt genießt Priorität, wird also ausgewählt
+außer wenn es eine Exception enthält.
+
+Das so erstellte Objekt \emph{selectedRate} beinhaltet nun entweder
+den \emph{Future} mit dem Wechselkurs des US-Dollar oder mit dem des
+Schweizer Franken.
+
+Auf diesem Objekt wird die \texttt{map}-Methode aufgerufen. Diese wird,
+wenn der Wechselkurs akzeptabel ist das Buchen des Hotelzimmers beauftragen,
+wenn nicht eine Exception werfen.
+
+Zuletzt wird ein \emph{Future} erstellt um den Flug zu buchen. Dies
+geschiet in Abhänigkeit vom Erfolg des Buchens eines Hotelzimmers.
+
+Wenn auch dieser \emph{Future} erfolgreich abschließt, dann ist die
+Liste der drei Aufgaben abgearbeitet.
+
+Zuletzt steht der Methodenaufruf \texttt{packSuitcase()}, der blockierend
+im Main-Thread läuft. Da die Methodenaufrufe der \emph{Futures} alle
+nicht blockierend sind laufen diese Aufgaben nebenläufig.
+
 \subsection{Ein Tag auf der Baustelle}
+
+\paragraph{Szenario}
+
+\paragraph{Pseudocode} für diesen Anwendungsfall:
+
+\paragraph{Diskussion des Codes}

@@ -4,9 +4,9 @@
 
 Methodenaufrufe in üblichen Programmiersprachen sind blockierend. Das bedeutet,
 dass das Hauptprogramm so lange blockiert wird, wie der Methodenaufruf läuft.
-So wird in Listing XXX die Methode \texttt{tuEtwas()} eines Objektes aufgerufen.
+So wird in Listing \ref{lst:codeBlocking} die Methode \texttt{tuEtwas()} eines Objektes aufgerufen.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Blockierender Methodenaufruf},label={lst:codeBlocking},captionpos=b]
 main() {
   objekt.tuEtwas()
   tuEtwasAnderes()
@@ -17,7 +17,7 @@ Führen wir das Schlüsselwort \texttt{nebenlaeufig} in unseren Pseudocode ein,
 so können wir ausdrücken, dass die aufgerufene Methode nicht blockieren soll,
 sondern dass im Hauptthread weitergearbeitet werden kann.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Nebenläufiger Methodenaufruf},label={lst:codeConcurrent},captionpos=b]
 main() {
   nebenlaeufig objekt.tuEtwas()
   tuEtwasAnderes()
@@ -101,5 +101,24 @@ zu machen besteht darin, diese zu kombinieren. Dazu gibt es verschiedene
 Möglichkeiten.
 
 % carcare for yield
+\paragraph{For Comprehension} ist ein grundlegender Bestandteil
+der Sprache \emph{Scala}, den es vor \emph{Futures} und \emph{Promises}
+gab. Dieser erinnert, auch aufgrund des Schlüsselworts \emph{for}
+an Schleifen, wie sie aus imperativen und objektorientierten
+Programmiersprachen bekannt sind.
+
+\begin{lstlisting}[caption={For Comprehension},label={lst:forComprehension},captionpos=b]
+val seq = Seq(1, 2, 3, 4, 5)
+for (i <- seq if i % 2 == 0) yield i
+\end{lstlisting}
+
+In Listing \ref{lst:forComprehension} ist ein minimales Beispiel für
+eine \emph{For Comprehension} gegeben.
+
+Durch den \texttt{<-}-Operator wird nach und nach jedes Element
+der Sequenz an die Variable \texttt{i} gebunden.
+
+\texttt{yield} bla bla
 
 % andThen, foldLeft, flatMap, foreach and filter
+\paragraph{andThen, foldLeft, flatMap, foreach und filter}
