@@ -1,0 +1,19 @@
+def getNewTireAsFuture(): Future[Tire] = future {
+  return getNewTire()
+}
+
+def replaceTire(tire: Tire): Future[Boolean] = future {
+  return replace(tire) 
+}
+
+def main() {
+  // concurrent
+  for {
+    tire <- getNewTireAsFuture()
+    success <- replaceTire(tire)
+  } yield println("got response " + success)
+  
+  // main thread
+  cleanCar()
+}
+
