@@ -49,8 +49,11 @@ A Future object either holds a result of a computation or an
 exception in the case that the computation failed.
 \end{quote}
 
-% non blocking
+Das erklärte Ziel ist es, einen angenehmen Weg zu schaffen um nicht
+blockierend (\glqq non-blocking\grqq{}) zu programmieren.
 
+Alles was innerhalb eines \emph{Futures} passiert läuft nicht im
+Hauptthread.
 
 \paragraph{Einfaches Beispiel in Pseudocode}
 
@@ -59,6 +62,12 @@ exception in the case that the computation failed.
        label = lst:scala_mini_future,
        captionpos=b]
  {../code/minimal/future/Future.pseudo}
+ 
+In Listing \ref{lst:scala_mini_future} ist der Umgang mit einem \emph{Future}
+skizziert. Sie sind generische Typen, es ist also Möglich \emph{Futures}
+zu verwenden die beliebige Typen beinhalten. Der Code des \emph{Futures}
+wird innerhalb des \texttt{future \{ ... \}}-Blocks definiert. Der
+Rückgabewert muss dem Typen entsprechen, den der \emph{Future} zurückgibt.
 
 \subsection{Promises}
 
@@ -71,6 +80,10 @@ Conversely, a promise can also be used to complete a future with an exception,
 by failing the promise, using the \texttt{failure} method.
 \end{quote}
 
+Das Konzept \emph{Promise} baut auf den \emph{Futures} auf. Es bietet
+einmaligen Schreibzugriff auf ein Objekt, das zum gegebenen Zeitpunkt
+noch nicht beschrieben werden kann, zum Beispiel weil dieser Wert
+noch nicht berechnet worden ist.
 
 \paragraph{Einfaches Beispiel in Pseudocode}
 
@@ -79,13 +92,20 @@ by failing the promise, using the \texttt{failure} method.
        label = lst:scala_mini_promise,
        captionpos=b]
  {../code/minimal/promise/Promise.pseudo}
+ 
+Im Beispiel in Listing \ref{lst:scala_mini_promise} ist ein \emph{Promise} zu sehen.
+Jedes \emph{Promise} beinhaltet ein \emph{Future}. Im Programm kann
+nun so lange gerechnet werden, bis der Wert mit dem das \emph{Promise}
+vervollständigt werden kann verfügbar ist. Im Beispiel ist dieser
+Wert der Einfachheit halber hart codiert, in der Praxis wird er das
+nicht sein.
 
 \paragraph{Vergleich} von \emph{Futures} und \emph{Promises}.
 
 \begin{table}[h]
 \begin{tabular}{lllll}
  & \textbf{Eigenschaft} & \textbf{Future} & \textbf{Promise} &  \\
- & Lesbar &  &  &  \\
+ & Lesbar & Ja & Nein &  \\
  & Schreibbar & Nein & Ja &  \\
  & Beinhaltet anderen & Nein & Ja &  \\
  &  &  &  &  \\
@@ -118,7 +138,29 @@ eine \emph{For Comprehension} gegeben.
 Durch den \texttt{<-}-Operator wird nach und nach jedes Element
 der Sequenz an die Variable \texttt{i} gebunden.
 
-\texttt{yield} bla bla
+In \texttt{yield} kann auf das Ergebnis reagiert werden.
+
+\paragraph{Beispiel} für die Kombination von \emph{Futures} mittels
+einer \emph{For Comprehension}
+
+\lstinputlisting
+    [caption={Pseudocode zur \emph{For Comprehension} },
+       label = lst:scala_for_comprehension,
+       captionpos=b]
+ {../code/carcare/Carcare.pseudo}
+ 
+In diesem Beispiel wird an einem PKW gearbeitet. Es gibt zwei
+Aufgaben, die erledigt werden müssen: Ein Reifen muss gewechselt werden
+(dies unterteilt sich in die voneinander abhängigen Teilaufgaben
+\emph{Neuen Reifen besorgen} und \emph{Neuen Reifen montieren}) und
+das Fahrzeug muss gewaschen werden. Bevor der neue Reifen also montiert
+werden kann muss gewartet werden bis er verfügbar ist. Diese Zeit
+kann genutzt werden um einen Teil zu waschen.
+
+Während die \texttt{cleanCar()}-Methode im Hauptthread arbeitet
+blockiert die andere Aufgabe so lange, bis die erste Teilaufgabe
+erfüllt ist. Danach kann der neue Reifen montiert werden und
+eine Erfolgsmeldung ausgegeben werden.
 
 % andThen, foldLeft, flatMap, foreach and filter
 \paragraph{andThen, foldLeft, flatMap, foreach und filter}
