@@ -1,0 +1,19 @@
+val myPromise = promise[Integer]
+val myFuture = myPromise.future
+
+val apprentice = future {
+  val toolbox: Integer = getToolbox()
+  // complete the promise
+  myPromise.success(toolbox)
+  // this will cause an exception!
+  myPromise.success(toolbox) 
+  cleanConstructionSite()
+}
+
+val craftsman = future {
+  takeMeasurement()
+  myFuture.onSuccess {
+    case toolbox: Integer => 
+      pickTheRightTool(toolbox)
+  }
+}

@@ -94,7 +94,7 @@ nutzen.
 
 \lstinputlisting
     [caption={Code zum Anwendungsfall \glqq Bauarbeiten\grqq{} },
-       label = lst:holiday,
+       label = lst:constructionsite,
        captionpos=b]
  {../code/constructionsite/Constructionsite.pseudo}
 
@@ -109,3 +109,22 @@ betroffen. Sobald der Lehrling das Versprechen einlöst wird die
 \texttt{onSuccess}-Callback-Methode des zugehörigen Futures ausgelöst.
 An dieser Stelle kann der Meister seine Vorarbeiten beenden und sich
 an die eigentliche Arbeit machen.
+
+\paragraph{Mehrmaliges Schreiben} ist bei Promises nicht erlaubt.
+Nehmen wir an, der Code wird folgendermaßen verändert:
+
+\lstinputlisting
+    [caption={Modifizierter Code zum Anwendungsfall \glqq Bauarbeiten\grqq{} },
+       label = lst:constructionsite_invalid,
+       captionpos=b]
+ {../code/constructionsite/Constructionsite_invalid.pseudo}
+ 
+Der zweite Aufruf der \texttt{success()}-Methode des \emph{Promises}
+wird eine Exception auslösen, unabhängig vom Parameter.
+
+Dieses Verhalten ist gewollt und macht \emph{Promises} berechenbar.
+Es gibt zwei Möglichkeiten wie diese abgeschlossen werden könnnen:
+Entweder durch einen Wert von dem Typ mit dem sie typisiert sind,
+oder durch eine Exception falls bei der Berechnung ein Fehler auftrat.
+Ein Beispiel in unserem Anwendungsfall dafür könnte sein, dass der
+Lehrling den Werkzeugkasten im Auto nicht finden kann.
