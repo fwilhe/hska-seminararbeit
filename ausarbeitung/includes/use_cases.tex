@@ -71,10 +71,41 @@ Zuletzt steht der Methodenaufruf \texttt{packSuitcase()}, der blockierend
 im Main-Thread läuft. Da die Methodenaufrufe der \emph{Futures} alle
 nicht blockierend sind laufen diese Aufgaben nebenläufig.
 
-\subsection{Ein Tag auf der Baustelle}
+\subsection{Bauarbeiten}
+
+Dieser Anwendungsfall demonstriert die Verwendung von \emph{Promises}.
 
 \paragraph{Szenario}
 
+Es finden Bauarbeiten statt. Beteiligt sind zwei handelnde Personen,
+ein Meister und sein Lehrling. Als diese mit der Arbeit beginnen möchten
+fällt Ihnen auf, dass sie den Werkzeugkasten vergessen haben. Der
+Lehrling bricht auf um diesen zu besorgen. Die Zwischenzeit kann
+der Meister nutzen um Messungen vorzunehmen. Wenn der Lehrling mit
+dem Werkzeugkasten zurückkommt kann er sich einer anderen Aufgabe
+(dem säubern der Baustelle) widmen, während der Meister das für die
+anstehende Arbeit passende Werkzeug auswählen kann.
+
+Würden hier blockierende Methodenaufrufe eingesetzt, dann wäre es nicht
+möglich die Zeit in der die Werkzeugkiste geholt wird sinnvoll zu
+nutzen.
+
 \paragraph{Pseudocode} für diesen Anwendungsfall:
 
+\lstinputlisting
+    [caption={Code zum Anwendungsfall \glqq Bauarbeiten\grqq{} },
+       label = lst:holiday,
+       captionpos=b]
+ {../code/constructionsite/Constructionsite.pseudo}
+
 \paragraph{Diskussion des Codes}
+
+Es wird ein \emph{Promise} erzeugt und der dazugehörige \emph{Future}
+gespeichert. Der Lehrling und der Meister werden als \emph{Future}
+modelliert. Der Future des Lehrlings wird mit dem Methodenaufruf
+\texttt{getToolbox()} blockiert, da er währenddessen keine weitere
+Tätigkeit ausführen kann. Der Future des Meisters ist davon nicht
+betroffen. Sobald der Lehrling das Versprechen einlöst wird die
+\texttt{onSuccess}-Callback-Methode des zugehörigen Futures ausgelöst.
+An dieser Stelle kann der Meister seine Vorarbeiten beenden und sich
+an die eigentliche Arbeit machen.
