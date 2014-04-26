@@ -71,6 +71,19 @@ Zuletzt steht der Methodenaufruf \texttt{packSuitcase()}, der blockierend
 im Main-Thread läuft. Da die Methodenaufrufe der \emph{Futures} alle
 nicht blockierend sind laufen diese Aufgaben nebenläufig.
 
+\paragraph{Alternative: Callback-Verschachtelung} Es ist möglich
+diese Aufgabe komplett ohne die von \emph{Scala} zur Verfügung gestellten
+Kombinatoren zu lösen. Dafür ist es notwendig, die Callback-Methoden
+(\texttt{onComplete}, \texttt{onSuccess} und \texttt{onFailure}) zu
+verschachteln. Dies führt zu wesentlich unübersichtlicherem Code
+wie folgendes Beispiel verdeutlichen soll:
+
+\lstinputlisting
+    [caption={Code zum Anwendungsfall \glqq Urlaubsplanung\grqq{} mit verschachtelten Callbacks },
+       label = lst:holiday_nested,
+       captionpos=b]
+ {../code/holiday/nested/Holiday_nested.pseudo}
+
 \subsection{Bauarbeiten}
 
 Dieser Anwendungsfall demonstriert die Verwendung von \emph{Promises}.
