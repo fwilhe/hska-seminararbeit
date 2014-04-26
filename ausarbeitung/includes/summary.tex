@@ -36,3 +36,32 @@ dem target \emph{run} das Programm ausführt.
 Alternativ kann auch die Kommandozeile \\
 \texttt{scalac *.scala \&\& scala de.hska.wifl1011.seminararbeit.Main} \\
 von Hand ausgeführt werden.
+
+\subsection{Blick über den Tellerrand}
+
+Viele Programmiersprachen bieten mittlerweile Implementierungen von
+\emph{Futures} und zum Teil von \emph{Promises}.
+
+So befindet sich zum Beispiel seit \emph{C++11} \emph{std::future} und
+\emph{std::future} im \emph{C++}-Standard (vgl.: \cite{cpp11FAQ}).
+
+\paragraph{\emph{Futures} und \emph{Promises} in \emph{Scala}}
+
+Es gab bereits seit längerem verschiedene Implementierungen dieser Sprachmittel,
+unter anderem im Akka-Framework, in Skalaz, in den Twitter-Util-Klassen so wie
+in java.util.concurrent (vgl. \cite{futuresTry}).
+
+Um der Fragmentierung im Umfeld der Programmiersprache entgegenzuwirken und
+diese Techniken für alle Scala-Entwickler zugänglich zu machen, wurde auf Basis
+des SIP-Dokuments SIP-14 eine Implementierung im scala.concurrent-Package
+vorgenommen.
+
+\subsection{Echte Anwendungen von \emph{Futures} und \emph{Promises}}
+
+Ein Beispiel für den echten Einsatz von \emph{Futures} und \emph{Promises}
+ist das \emph{play framework} (vgl.: \cite{playframework}). Es wird
+von \emph{Typesafe} entwickelt, der Firma die auch hinter \emph{Scala}
+steht.
+
+Eine einfache Suche nach dem Schlüsselwort \glqq Future\grqq{} fördert
+im Quelltext des Frameworks knapp 1000 Treffer zu Tage.
