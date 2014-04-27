@@ -116,51 +116,48 @@ nicht sein.
 
 \subsection{Kombinatoren}
 
-Ein Weg um \emph{Futures} und \emph{Promises} noch mächtiger
-zu machen besteht darin, diese zu kombinieren. Dazu gibt es verschiedene
-Möglichkeiten.
+Kombinatoren werden beschrieben in der offiziellen \emph{Scala}-Dokumentation (vgl.: \cite{scalaDokuFP}).
+Sie erlauben es, mehrere Futures zu verbinden, ohne die \texttt{onComplete()}-Methoden
+zu verschachteln. Dadruch können komplexe Zusammenhänge relativ einfach
+im Code formuliert werden.
 
-% carcare for yield
-\paragraph{For Comprehension} ist ein grundlegender Bestandteil
-der Sprache \emph{Scala}, den es vor \emph{Futures} und \emph{Promises}
-gab. Dieser erinnert, auch aufgrund des Schlüsselworts \emph{for}
-an Schleifen, wie sie aus imperativen und objektorientierten
-Programmiersprachen bekannt sind.
+\paragraph{map} ist einer der grundlegenden Kombinatoren. Er bildet
+einen \emph{Future} nach bestimmten Regel auf einen anderen ab.
 
-\begin{lstlisting}[caption={For Comprehension},label={lst:forComprehension},captionpos=b]
-val seq = Seq(1, 2, 3, 4, 5)
-for (i <- seq if i % 2 == 0) yield i
-\end{lstlisting}
+In \ref{lst:scala_map} ist ein einfaches Beispiel dafür gegeben.
+In diesem Beispiel wird eine Gurke geerntet. Diese besitzt als
+Eigenschaft eine Krümmung (in Grad). Da sich nur einigermaßen gerade
+Gurken gut verkaufen lassen wird diese Future per \texttt{map}-Funktion
+auf einen anderen Future abgebildet. Hier findet die Prüfung statt ob
+die Gruke verkehrsfähig ist oder weggeworfen werden muss.
 
-In Listing \ref{lst:forComprehension} ist ein minimales Beispiel für
-eine \emph{For Comprehension} gegeben.
-
-Durch den \texttt{<-}-Operator wird nach und nach jedes Element
-der Sequenz an die Variable \texttt{i} gebunden.
-
-In \texttt{yield} kann auf das Ergebnis reagiert werden.
-
-\paragraph{Beispiel} für die Kombination von \emph{Futures} mittels
-einer \emph{For Comprehension}
+Falls sie nicht gerade genug ist dann enthält der \texttt{harvestFuture}
+eine Exception.
 
 \lstinputlisting
-    [caption={Pseudocode zur \emph{For Comprehension} },
-       label = lst:scala_for_comprehension,
+    [caption={Pseudocode zum \emph{map}-Kombinator },
+       label = lst:scala_map,
        captionpos=b]
- {../code/carcare/Carcare.pseudo}
+ {../code/harvestluna/Harvest.pseudo}
  
-In diesem Beispiel wird an einem PKW gearbeitet. Es gibt zwei
-Aufgaben, die erledigt werden müssen: Ein Reifen muss gewechselt werden
-(dies unterteilt sich in die voneinander abhängigen Teilaufgaben
-\emph{Neuen Reifen besorgen} und \emph{Neuen Reifen montieren}) und
-das Fahrzeug muss gewaschen werden. Bevor der neue Reifen also montiert
-werden kann muss gewartet werden bis er verfügbar ist. Diese Zeit
-kann genutzt werden um einen Teil zu waschen.
+\paragraph{fallbackTo} ist ein Kombinator der zwei \emph{Futures}
+verbindet. Dabei wird überprüft ob der erste einen Wert (und damit
+keine Exception) enthält. Wenn dies der Fall ist wird dieser ausgewählt.
+Falls der erste eine Exception enthält wird der zweite überprüft. Enthält
+dieser einen Wert, dann wird er ausgewählt. Enthält auch der zweite
+eine Exception, dann enthält auch der neu erstellte eine Exception.
 
-Während die \texttt{cleanCar()}-Methode im Hauptthread arbeitet
-blockiert die andere Aufgabe so lange, bis die erste Teilaufgabe
-erfüllt ist. Danach kann der neue Reifen montiert werden und
-eine Erfolgsmeldung ausgegeben werden.
+\lstinputlisting
+    [caption={Pseudocode zum \emph{fallbackTo}-Kombinator },
+       label = lst:scala_fallbackTo,
+       captionpos=b]
+ {../code/lookingforsomething/Looking.pseudo}
+ 
+In \ref{lst:scala_fallbackTo} ist ein einfaches Beispiel gegeben:
+Es gibt eine Suchanfrage und verschiedene Anbieter bei denen diese
+Anfrage bearbeitet werden kann. Sollte der eine Anbieter ausfallen,
+dann steht immer noch das Ergebnis des anderen Anbieters zur Verfügung.
+Im worst-case stehen beide Anbieter nicht zur Verfügung, in diesem
+Fall ist es nicht möglich ein Ergebnis anzuzeigen.
 
-% andThen, foldLeft, flatMap, foreach and filter
-\paragraph{andThen, foldLeft, flatMap, foreach und filter}
+\paragraph{For-Comprehension}

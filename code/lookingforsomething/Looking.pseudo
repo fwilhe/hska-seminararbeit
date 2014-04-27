@@ -1,0 +1,6 @@
+val queryGoogle: Future[ResultPage] = 
+  query(google, serachterm)
+val queryBing: Future[ResultPage] = 
+  query(bing, serachterm)
+
+val query = queryGoogle.fallbackTo(queryBing)

@@ -1,0 +1,14 @@
+val cucumberFuture = harvestCucumber()
+
+val harvestFuture = cucumberFuture.map {
+  cucumber => 
+    if (isStraightEnough(cucumber)) 
+      loadOnBox(cucumber)
+  else 
+    throw new Exception("Can't sell this one")
+}
+
+harvestFuture.onComplete {
+  case Success(_) => println("Harvested a Cucumber")
+  case Failure(ex) => println(ex)
+}
