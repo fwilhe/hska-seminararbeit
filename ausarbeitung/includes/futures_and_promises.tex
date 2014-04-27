@@ -14,7 +14,7 @@ main() {
 \end{lstlisting}
 
 Führen wir das Schlüsselwort \texttt{nebenlaeufig} in unseren Pseudocode ein,
-können wir ausdrücken, dass die aufgerufene Methode nicht blockieren soll,
+können wir ausdrücken, dass die aufgerufene Methode nicht blockieren soll
 und im Hauptthread weitergearbeitet werden kann.
 
 \begin{lstlisting}[caption={Nebenläufiger Methodenaufruf},label={lst:codeConcurrent},captionpos=b]
@@ -127,7 +127,7 @@ einen \emph{Future} nach bestimmten Regeln auf einen anderen ab.
 
 In \ref{lst:scala_map} ist ein einfaches Beispiel dafür gegeben.
 In diesem Beispiel wird eine Gurke geerntet. Deren Eigenschaft ist eine
-Krümmung in Grad. Da sich nur einigermaßen gerade
+Krümmung (in Grad). Da sich nur einigermaßen gerade
 Gurken gut verkaufen lassen, wird diese Future per \texttt{map}-Funktion
 auf einen anderen Future abgebildet. Hier findet die Prüfung statt, ob
 die Gurke verkehrsfähig ist oder entsorgt wird.
@@ -145,7 +145,7 @@ eine Exception.
 verbindet. Dabei wird überprüft, ob der erste einen Wert (und damit
 keine Exception) enthält. Wenn dies der Fall ist, wird dieser ausgewählt.
 Enthält der erste Future eine Exception, dann wird der zweite überprüft.
-Wenn dieser einen Wert enhält, wird er ausgewählt. Wenn er eine
+Wenn dieser einen Wert enthält, wird er ausgewählt. Wenn er eine
 Exception enthält, enthält auch der neu erstellte Future eine Exception.
 
 \lstinputlisting
@@ -165,7 +165,7 @@ dann ist es nicht möglich, ein Ergebnis anzuzeigen.
 erstes beendet ist. Dies ist nützlich wenn es um Geschwindigkeit
 geht. Wenn zum Beispiel ein Notfall passiert und über verschiedene
 Kanäle ein Notruf abgesetzt wird, ist das einzig sinnvolle Kriterium
-zur Auswahl über welchen Kanal als erstes Hilfe zu erwarten ist.
+zur Auswahl, über welchen Kanal als erstes Hilfe zu erwarten ist.
 
 \lstinputlisting
     [caption={Pseudocode zum \emph{firstCompletedOf}-Kombinator },

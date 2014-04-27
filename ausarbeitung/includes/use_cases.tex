@@ -11,31 +11,37 @@ von \emph{Futures}.
 
 \paragraph{Szenario}
 
-Es wird ein Urlaub geplant. Dabei gibt es drei Dinge, die erledigt
-werden müssen. Es muss der \emph{Wechselkurs} der Währung des
-Reiseziels ermittelt werden. Wenn dies geschehen ist muss ein
-\emph{Hotelzimmer} gebucht werden. Als letzter Schritt muss der
-\emph{Flug} gebucht werden. Eine von den drei zuvor genannten
-Schritten unabhängige Tätigkeit ist das Packen der Koffer. Während
-also zum Beispiel auf die Antwort des Servers der Bank gewartet wird
-kann an dieser Stelle sinnvolle Arbeit geschehen.
+Ein Urlaub wird geplant. Dabei gibt es drei Punkte, die zu erledigen sind.
 
-Für jeden dieser Schritte gibt es eine gewisse Wahrscheinlichkeit
-dass er nicht erfolgreich ist. So kann es zum Beispiel passieren,
-dass der Server zum Abfragen der Wechselkurse nicht online ist.
+\begin{enumerate}
+\item Der Wechselkurs der Währung des Reiseziels wird ermittelt.
+\item Ein Hotelzimmer wird gebucht.
+\item Ein Flug wird gebucht.
+\end{enumerate}
 
-Ein weiteres Risiko im Umgang mit Fremdwährungen ist, dass der
+Eine von den drei zuvor genannten Schritten unabhängige Tätigkeit ist
+das Packen der Koffer. Während zum Beispiel auf die Antwort des Servers 
+der Bank gewartet wird, kann an dieser Stelle sinnvolle Arbeit geschehen 
+(mit dem Kofferpacken beginnen).
+
+Für jeden dieser Schritte gibt es eine gewisse Wahrscheinlichkeit, 
+dass er nicht erfolgreich ist. Es kann zum Beispiel sein, dass der 
+Server zum Abfragen der Wechselkurse nicht online ist.
+
+Ein weiteres Risiko im Umgang mit Fremdwährungen ist, dass der 
 Wechselkurs sehr ungünstig ist. Für diesen Fall ist es eine Option,
-sich ein zweites Reiseziel offen zu halten. Es besteht zwar nach wie
-vor die Gefahr, dass beide Währungen zu nicht akzeptablen Kursen 
-erhältlich sind, aber dieser Fall wird hier nicht betrachtet.
+sich ein zweites Reiseziel offen zu halten.
 
-Ebenso gibt es bei der Buchung von Hotelzimmer und Flug eine gewisse
-Wahrscheinlichkeit eines technischen Fehlers.
+Es besteht zwar nach wie vor die Gefahr, dass beide Währungen zu nicht
+akzeptablen Kursen erhältlich sind, aber dieser Fall wird hier nicht 
+betrachtet.
 
-Sollte einer dieser Fehlerzustände eintreten, kann dies mit
-\emph{Futures} modelliert werden, in dem diese eine Exception
-statt eines zu erwartenden Wertes enthalten.
+Ebenso gibt es bei der Buchung von Hotelzimmer und Flug eine gewisse 
+Wahrscheinlichkeit dass ein technischer Fehler auftritt.
+
+Sollte einer dieser Fehlerzustände eintreten, kann dies mit \emph{Futures} 
+modelliert werden, in dem diese eine Exception statt eines zu 
+erwartenden Wertes enthalten.
 
 \paragraph{Pseudocode} für diesen Anwendungsfall:
 
@@ -47,11 +53,11 @@ statt eines zu erwartenden Wertes enthalten.
  
 \paragraph{Diskussion des Codes}
 
-In diesem Programm werden zwei \emph{Futures} erzugt, die jeweils
+In diesem Programm werden zwei \emph{Futures} erzeugt, die jeweils
 den Wechselkurs für eine Währung enthalten. Mittels der
 \texttt{fallbackTo}-Methode wird eine Währung ausgewählt.
 Das \emph{rateDollar}-Objekt genießt Priorität, es wird ausgewählt
-außer es enthält eine Exception.
+sofern es keine Exception enthält.
 
 Das so erstellte Objekt \emph{selectedRate} beinhaltet nun entweder
 den \emph{Future} mit dem Wechselkurs des US-Dollar oder mit dem des
@@ -61,7 +67,7 @@ Auf diesem Objekt wird die \texttt{map}-Methode aufgerufen. Diese wird,
 wenn der Wechselkurs akzeptabel ist, das Buchen des Hotelzimmers beauftragen,
 wenn nicht eine Exception werfen.
 
-Anschließen wird ein \emph{Future} erstellt um den Flug zu buchen. Dies
+Anschließend wird ein \emph{Future} erstellt um den Flug zu buchen. Dies
 geschieht in Abhänigkeit vom Erfolg des Buchens eines Hotelzimmers.
 
 Wenn auch dieser \emph{Future} erfolgreich abschließt, ist die
@@ -93,13 +99,13 @@ Dieser Anwendungsfall demonstriert die Verwendung von \emph{Promises}.
 Es finden Bauarbeiten statt. Beteiligt sind zwei handelnde Personen,
 ein Meister und sein Lehrling. Als sie mit der Arbeit beginnen möchten
 fällt ihnen auf, dass sie den Werkzeugkasten vergessen haben. Der
-Lehrling bricht auf, um diesen zu besorgen. Die Zwischenzeit kann
+Lehrling bricht auf, um diesen zu holen. Die Zwischenzeit kann
 der Meister nutzen, um Messungen vorzunehmen. Wenn der Lehrling mit
 dem Werkzeugkasten zurückkommt, kann er sich einer anderen Aufgabe
 (dem Reinigen der Baustelle) widmen, während der Meister das für die
 anstehende Arbeit passende Werkzeug auswählen kann.
 
-Würden hier blockierende Methodenaufrufe eingesetzt, dann wäre es nicht
+Würden hier blockierende Methodenaufrufe eingesetzt, wäre es nicht
 möglich, die Zeit in der die Werkzeugkiste geholt wird, sinnvoll zu
 nutzen.
 
