@@ -1,0 +1,11 @@
+val doctor1: Future[String] = callDoctor(channel1)
+val doctor2: Future[String] = callDoctor(channel2)
+val doctor3: Future[String] = callDoctor(channel3)
+
+val doctors = List(doctor1, doctor2, doctor3)
+
+val f = Future.firstCompletedOf(doctors)
+
+f.onSuccess {
+  case value => println("The first doctor is here.")
+}

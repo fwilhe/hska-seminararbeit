@@ -160,4 +160,19 @@ dann steht immer noch das Ergebnis des anderen Anbieters zur Verfügung.
 Im worst-case stehen beide Anbieter nicht zur Verfügung, in diesem
 Fall ist es nicht möglich ein Ergebnis anzuzeigen.
 
+\paragraph{firstCompletedOf} wählt den \emph{Future} aus, der als
+erstes beendet ist. Dies ist nützlich wenn es um Geschwindigkeit
+geht. Wenn zum Beispiel ein Notfall passiert und über verschiedene
+Kanäle ein Notruf abgesetzt wird, dann ist das einzig sinnvolle Kriterium
+zur Auswahl über welchen Kanal als erstes Hilfe zu erwarten ist.
+
+\lstinputlisting
+    [caption={Pseudocode zum \emph{firstCompletedOf}-Kombinator },
+       label = lst:scala_firstCompletedOf,
+       captionpos=b]
+ {../code/accident/Accident.pseudo}
+ 
+Listing \ref{lst:scala_firstCompletedOf} skizziert diesen
+Anwendungsfall.
+
 \paragraph{For-Comprehension}
