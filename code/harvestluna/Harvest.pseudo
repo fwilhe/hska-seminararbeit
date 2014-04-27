@@ -2,10 +2,10 @@ val cucumberFuture = harvestCucumber()
 
 val harvestFuture = cucumberFuture.map {
   cucumber => 
-    if (isStraightEnough(cucumber)) 
+    if (isGoodToSell(cucumber)) 
       loadOnBox(cucumber)
-  else 
-    throw new Exception("Can't sell this one")
+    else 
+      throw new Exception("Can't sell this one")
 }
 
 harvestFuture.onComplete {

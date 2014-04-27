@@ -3,7 +3,7 @@
 \subsection{Motivation}
 
 Methodenaufrufe in üblichen Programmiersprachen sind blockierend. Das bedeutet,
-dass das Hauptprogramm so lange blockiert wird, wie der Methodenaufruf läuft.
+dass das Hauptprogramm solange blockiert wird, wie der Methodenaufruf läuft.
 So wird in Listing \ref{lst:codeBlocking} die Methode \texttt{tuEtwas()} eines Objektes aufgerufen.
 
 \begin{lstlisting}[caption={Blockierender Methodenaufruf},label={lst:codeBlocking},captionpos=b]
@@ -14,8 +14,8 @@ main() {
 \end{lstlisting}
 
 Führen wir das Schlüsselwort \texttt{nebenlaeufig} in unseren Pseudocode ein,
-so können wir ausdrücken, dass die aufgerufene Methode nicht blockieren soll,
-sondern dass im Hauptthread weitergearbeitet werden kann.
+können wir ausdrücken, dass die aufgerufene Methode nicht blockieren soll,
+und im Hauptthread weitergearbeitet werden kann.
 
 \begin{lstlisting}[caption={Nebenläufiger Methodenaufruf},label={lst:codeConcurrent},captionpos=b]
 main() {
@@ -28,10 +28,11 @@ Nun kann \texttt{tuEtwasAnderes()} \emph{nebenläufig} ausgeführt werden. Damit
 ist es bei mehreren Prozessoren möglich, den Code parallel auszuführen.
 
 Eine Analogie aus dem IT-Umfeld sind Unix-Shells. Wenn zum Beispiel ein
-\texttt{find}-Befehl ausgeführt wird, so blockiert die Shell bis der Befehl
-abgeschlossen ist. Durch Anhängen eines kaufmännischen Undzeichens ist es möglich,
-den Befehl im Hintergrund laufen zu lassen, wodurch es möglich wird im selben
-Terminal weiter zu arbeiten während der Befehl im Hintergrund (also nebenläufig)
+\texttt{find}-Befehl ausgeführt wird, blockiert die Shell bis der Befehl
+abgeschlossen ist. Durch Anhängen eines kaufmännischen \glqq und\grqq{}-Zeichens 
+ist es möglich,
+den Befehl im Hintergrund laufen zu lassen. Dadurch kann im selben
+Terminal weiter gearbeitet werden während der Befehl im Hintergrund (also nebenläufig)
 läuft.
 
 \subsection{Futures}
@@ -39,7 +40,7 @@ läuft.
 Im SIP-14 wird ein \emph{Future} wie folgt beschrieben:
 \begin{quote}
 Futures provide a nice way to reason about performing many operations in 
-parallel– in an efficient and non-blocking way. The idea is simple, a Future 
+parallel – in an efficient and non-blocking way. The idea is simple, a Future 
 is a sort of placeholder object that you can create for a result that doesn’t 
 yet exist. Generally, the result of the Future is computed concurrently and can 
 be later collected. Composing concurrent tasks in this way tends to result in 
@@ -49,7 +50,7 @@ A Future object either holds a result of a computation or an
 exception in the case that the computation failed.
 \end{quote}
 
-Das erklärte Ziel ist es, einen angenehmen Weg zu schaffen um nicht
+Das Ziel ist es, einen angenehmen Weg zu schaffen um nicht
 blockierend (\glqq non-blocking\grqq{}) zu programmieren.
 
 Alles was innerhalb eines \emph{Futures} passiert läuft nicht im
@@ -64,8 +65,8 @@ Hauptthread.
  {../code/minimal/future/Future.pseudo}
  
 In Listing \ref{lst:scala_mini_future} ist der Umgang mit einem \emph{Future}
-skizziert. Sie sind generische Typen, es ist also Möglich \emph{Futures}
-zu verwenden die beliebige Typen beinhalten. Der Code des \emph{Futures}
+skizziert. Sie sind generische Typen, es ist also möglich \emph{Futures}
+zu verwenden, die beliebige Typen beinhalten. Der Code des \emph{Futures}
 wird innerhalb des \texttt{future \{ ... \}}-Blocks definiert. Der
 Rückgabewert muss dem Typen entsprechen, den der \emph{Future} zurückgibt.
 
@@ -95,8 +96,8 @@ noch nicht berechnet worden ist.
  
 Im Beispiel in Listing \ref{lst:scala_mini_promise} ist ein \emph{Promise} zu sehen.
 Jedes \emph{Promise} beinhaltet ein \emph{Future}. Im Programm kann
-nun so lange gerechnet werden, bis der Wert mit dem das \emph{Promise}
-vervollständigt werden kann verfügbar ist. Im Beispiel ist dieser
+so lange gerechnet werden, bis der Wert mit dem das \emph{Promise}
+vervollständigt werden kann, verfügbar ist. Im Beispiel ist dieser
 Wert der Einfachheit halber hart codiert, in der Praxis wird er das
 nicht sein.
 
@@ -116,22 +117,22 @@ nicht sein.
 
 \subsection{Kombinatoren}
 
-Kombinatoren werden beschrieben in der offiziellen \emph{Scala}-Dokumentation (vgl.: \cite{scalaDokuFP}).
-Sie erlauben es, mehrere Futures zu verbinden, ohne die \texttt{onComplete()}-Methoden
-zu verschachteln. Dadruch können komplexe Zusammenhänge relativ einfach
+Kombinatoren werden in der offiziellen \emph{Scala}-Dokumentation beschrieben (vgl.: \cite{scalaDokuFP}).
+Sie erlauben es, mehrere \emph{Futures} zu verbinden, ohne die \texttt{onComplete()}-Methoden
+zu verschachteln. Auf diese Weise können komplexe Zusammenhänge relativ einfach
 im Code formuliert werden.
 
 \paragraph{map} ist einer der grundlegenden Kombinatoren. Er bildet
-einen \emph{Future} nach bestimmten Regel auf einen anderen ab.
+einen \emph{Future} nach bestimmten Regeln auf einen anderen ab.
 
 In \ref{lst:scala_map} ist ein einfaches Beispiel dafür gegeben.
-In diesem Beispiel wird eine Gurke geerntet. Diese besitzt als
-Eigenschaft eine Krümmung (in Grad). Da sich nur einigermaßen gerade
-Gurken gut verkaufen lassen wird diese Future per \texttt{map}-Funktion
-auf einen anderen Future abgebildet. Hier findet die Prüfung statt ob
-die Gruke verkehrsfähig ist oder weggeworfen werden muss.
+In diesem Beispiel wird eine Gurke geerntet. Deren Eigenschaft ist eine
+Krümmung in Grad. Da sich nur einigermaßen gerade
+Gurken gut verkaufen lassen, wird diese Future per \texttt{map}-Funktion
+auf einen anderen Future abgebildet. Hier findet die Prüfung statt, ob
+die Gurke verkehrsfähig ist oder entsorgt wird.
 
-Falls sie nicht gerade genug ist dann enthält der \texttt{harvestFuture}
+Falls sie nicht gerade genug ist, enthält der \texttt{harvestFuture}
 eine Exception.
 
 \lstinputlisting
@@ -141,11 +142,11 @@ eine Exception.
  {../code/harvestluna/Harvest.pseudo}
  
 \paragraph{fallbackTo} ist ein Kombinator der zwei \emph{Futures}
-verbindet. Dabei wird überprüft ob der erste einen Wert (und damit
-keine Exception) enthält. Wenn dies der Fall ist wird dieser ausgewählt.
-Falls der erste eine Exception enthält wird der zweite überprüft. Enthält
-dieser einen Wert, dann wird er ausgewählt. Enthält auch der zweite
-eine Exception, dann enthält auch der neu erstellte eine Exception.
+verbindet. Dabei wird überprüft, ob der erste einen Wert (und damit
+keine Exception) enthält. Wenn dies der Fall ist, wird dieser ausgewählt.
+Enthält der erste Future eine Exception, dann wird der zweite überprüft.
+Wenn dieser einen Wert enhält, wird er ausgewählt. Wenn er eine
+Exception enthält, enthält auch der neu erstellte Future eine Exception.
 
 \lstinputlisting
     [caption={Pseudocode zum \emph{fallbackTo}-Kombinator },
@@ -154,16 +155,16 @@ eine Exception, dann enthält auch der neu erstellte eine Exception.
  {../code/lookingforsomething/Looking.pseudo}
  
 In \ref{lst:scala_fallbackTo} ist ein einfaches Beispiel gegeben:
-Es gibt eine Suchanfrage und verschiedene Anbieter bei denen diese
-Anfrage bearbeitet werden kann. Sollte der eine Anbieter ausfallen,
-dann steht immer noch das Ergebnis des anderen Anbieters zur Verfügung.
-Im worst-case stehen beide Anbieter nicht zur Verfügung, in diesem
-Fall ist es nicht möglich ein Ergebnis anzuzeigen.
+
+Eine Suchanfrage kann von verschiedenen Anbietern bearbeitet werden. 
+Wenn ein Anbieter ausfällt, steht das Ergebnis eines anderen Anbieters 
+zur Verfügung. Im worst case stehen keine Anbieter zur Verfügung, 
+dann ist es nicht möglich, ein Ergebnis anzuzeigen.
 
 \paragraph{firstCompletedOf} wählt den \emph{Future} aus, der als
 erstes beendet ist. Dies ist nützlich wenn es um Geschwindigkeit
 geht. Wenn zum Beispiel ein Notfall passiert und über verschiedene
-Kanäle ein Notruf abgesetzt wird, dann ist das einzig sinnvolle Kriterium
+Kanäle ein Notruf abgesetzt wird, ist das einzig sinnvolle Kriterium
 zur Auswahl über welchen Kanal als erstes Hilfe zu erwarten ist.
 
 \lstinputlisting

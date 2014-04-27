@@ -2,14 +2,13 @@
 
 Ziel dieser Seminararbeit ist es, die Sprachmittel \emph{Future}
 und \emph{Promise} am Beispiel der Programmiersprache \emph{Scala}
-zu untersuchen. Dabei soll anhand von beispielhaften Anwendungsfällen
-verdeutlicht werden, in welchen Situationen diese Sprachmittel
-hilfreich sind.
+zu untersuchen. Anhand von Anwendungsbeispielen wird verdeutlicht, 
+in welchen Situationen diese Sprachmittel hilfreich sind.
 
 Der Code in diesem Dokument ist als Pseudocode zu verstehen, der für die
 Sache unwichtige Details abstrahiert.
 
-Die Programmbeispiele (Siehe \cite{code}) wurden mit
+Die Programmbeispiele (siehe \cite{code}) wurden mit
 \emph{Scala} in Version 2.10.3 geschrieben und getestet. Diese bietet
 eine eigene Implementierung von \emph{Futures} und \emph{Promises}.
 Eine kurze Anleitung zur Verwendung dieser Implementierung findet sich im
@@ -25,19 +24,21 @@ Dass es sich bei \emph{Futures} und \emph{Promises} um keine neuen
 Ideen handelt wird deutlich, wenn man \cite{Baker:1977:IGC:872734.806932}
 betrachtet. Bereits im Jahre 1977 wird die grundlegende Idee beschrieben.
 
-\emph{Futures} werden beschrieben als Sprachkonstrukte, die asynchron laufen. Sie 
+\emph{Futures} werden als Sprachkonstrukte beschrieben, die asynchron laufen. Sie 
 könnten zum Beispiel in der Form 
 \begin{lstlisting}
 (ENTWEDER <ausdruck_1> <ausdruck_2> .. <ausdruck_n>)
 \end{lstlisting}
 angegeben werden. Diese Notation sollte alle n Ausdrücke nebenläufig ausführen, 
 die Rückgabe sollte die des ersten Ausdrucks sein, der ein Ergebnis zurückliefert.
-Dabei war es die Idee, jeden Ausdruck auf einem eigenen Prozessor auszuführen, 
+Die Idee war, jeden Ausdruck auf einem eigenen Prozessor auszuführen, 
 wenigstens aber alle Ausdrücke auf mehrere Prozessoren zu verteilen. Hier ist in 
 einem 1977 veröffentlichten Papier bereits eine zentrale Problemstellung der 
 heutigen Zeit beschrieben: Die effiziente Softwareentwicklung in der Multicore-Ära.
 
 Anzumerken ist, dass nebenläufig nicht gleichbedeutend ist mit parallel.
 Nebenläufige Programme können auch auf Einkerncomputern ausgeführt werden.
-Dass ein Programm ohne Probleme parallel laufen kann ist ein positiver
-Effekt der nebenläufigen Programmierung, aber nicht Ihr alleiniges Ziel. 
+Ein positiver Effekt der nebenläufigen Programmierung ist, dass ein 
+Programm ohne Probleme parallel laufen kann; dies ist jedoch nicht ihr 
+alleiniges Ziel.
+

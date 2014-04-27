@@ -1,8 +1,8 @@
 \section{Anwendungsfälle}
 
 In diesem Kapitel werden verschiedene Anwendungsfälle geschildert.
-Diese sollen der Illustration der Verwendung von \emph{Futures} und
-\emph{Promises} dienen.
+Sie dienen der Illustration der Verwendung von \emph{Futures} und
+\emph{Promises}.
 
 \subsection{Urlaubsplanung}
 
@@ -22,19 +22,19 @@ kann an dieser Stelle sinnvolle Arbeit geschehen.
 
 Für jeden dieser Schritte gibt es eine gewisse Wahrscheinlichkeit
 dass er nicht erfolgreich ist. So kann es zum Beispiel passieren,
-dass der Server zum Abfragen der Wechselkursen nicht online ist.
+dass der Server zum Abfragen der Wechselkurse nicht online ist.
 
-Ein weiteres Risiko im Umgang mit Fremdwährungen ist es, dass der
-Wechselkurs sehr ungünstig ist. Für diesen Fall ist es eine Option
+Ein weiteres Risiko im Umgang mit Fremdwährungen ist, dass der
+Wechselkurs sehr ungünstig ist. Für diesen Fall ist es eine Option,
 sich ein zweites Reiseziel offen zu halten. Es besteht zwar nach wie
-vor die Gefahr dass beide Währungen nicht zu hinnehmbaren Kursen
-erhältlich sind, aber dieser Fall soll hier nicht betrachtet werden.
+vor die Gefahr, dass beide Währungen zu nicht akzeptablen Kursen 
+erhältlich sind, aber dieser Fall wird hier nicht betrachtet.
 
 Ebenso gibt es bei der Buchung von Hotelzimmer und Flug eine gewisse
 Wahrscheinlichkeit eines technischen Fehlers.
 
-Sollte einer dieser Fehlerzustände eintreten, so kann dies mit
-\emph{Futures} modelliert werden in dem diese eine Exception
+Sollte einer dieser Fehlerzustände eintreten, kann dies mit
+\emph{Futures} modelliert werden, in dem diese eine Exception
 statt eines zu erwartenden Wertes enthalten.
 
 \paragraph{Pseudocode} für diesen Anwendungsfall:
@@ -50,30 +50,30 @@ statt eines zu erwartenden Wertes enthalten.
 In diesem Programm werden zwei \emph{Futures} erzugt, die jeweils
 den Wechselkurs für eine Währung enthalten. Mittels der
 \texttt{fallbackTo}-Methode wird eine Währung ausgewählt.
-Das \emph{rateDollar}-Objekt genießt Priorität, wird also ausgewählt
-außer wenn es eine Exception enthält.
+Das \emph{rateDollar}-Objekt genießt Priorität, es wird ausgewählt
+außer es enthält eine Exception.
 
 Das so erstellte Objekt \emph{selectedRate} beinhaltet nun entweder
 den \emph{Future} mit dem Wechselkurs des US-Dollar oder mit dem des
 Schweizer Franken.
 
 Auf diesem Objekt wird die \texttt{map}-Methode aufgerufen. Diese wird,
-wenn der Wechselkurs akzeptabel ist das Buchen des Hotelzimmers beauftragen,
+wenn der Wechselkurs akzeptabel ist, das Buchen des Hotelzimmers beauftragen,
 wenn nicht eine Exception werfen.
 
-Zuletzt wird ein \emph{Future} erstellt um den Flug zu buchen. Dies
-geschiet in Abhänigkeit vom Erfolg des Buchens eines Hotelzimmers.
+Anschließen wird ein \emph{Future} erstellt um den Flug zu buchen. Dies
+geschieht in Abhänigkeit vom Erfolg des Buchens eines Hotelzimmers.
 
-Wenn auch dieser \emph{Future} erfolgreich abschließt, dann ist die
+Wenn auch dieser \emph{Future} erfolgreich abschließt, ist die
 Liste der drei Aufgaben abgearbeitet.
 
 Zuletzt steht der Methodenaufruf \texttt{packSuitcase()}, der blockierend
 im Main-Thread läuft. Da die Methodenaufrufe der \emph{Futures} alle
-nicht blockierend sind laufen diese Aufgaben nebenläufig.
+nicht blockierend sind, laufen diese Aufgaben nebenläufig.
 
-\paragraph{Alternative: Callback-Verschachtelung} Es ist möglich
-diese Aufgabe komplett ohne die von \emph{Scala} zur Verfügung gestellten
-Kombinatoren zu lösen. Dafür ist es notwendig, die Callback-Methoden
+\paragraph{Alternative: Callback-Verschachtelung} Diese Aufgabe kann
+komplett ohne die von \emph{Scala} zur Verfügung gestellten
+Kombinatoren gelöst werden. Dafür ist es notwendig, die Callback-Methoden
 (\texttt{onComplete}, \texttt{onSuccess} und \texttt{onFailure}) zu
 verschachteln. Dies führt zu wesentlich unübersichtlicherem Code
 wie folgendes Beispiel verdeutlichen soll:
@@ -91,16 +91,16 @@ Dieser Anwendungsfall demonstriert die Verwendung von \emph{Promises}.
 \paragraph{Szenario}
 
 Es finden Bauarbeiten statt. Beteiligt sind zwei handelnde Personen,
-ein Meister und sein Lehrling. Als diese mit der Arbeit beginnen möchten
-fällt Ihnen auf, dass sie den Werkzeugkasten vergessen haben. Der
-Lehrling bricht auf um diesen zu besorgen. Die Zwischenzeit kann
-der Meister nutzen um Messungen vorzunehmen. Wenn der Lehrling mit
-dem Werkzeugkasten zurückkommt kann er sich einer anderen Aufgabe
-(dem säubern der Baustelle) widmen, während der Meister das für die
+ein Meister und sein Lehrling. Als sie mit der Arbeit beginnen möchten
+fällt ihnen auf, dass sie den Werkzeugkasten vergessen haben. Der
+Lehrling bricht auf, um diesen zu besorgen. Die Zwischenzeit kann
+der Meister nutzen, um Messungen vorzunehmen. Wenn der Lehrling mit
+dem Werkzeugkasten zurückkommt, kann er sich einer anderen Aufgabe
+(dem Reinigen der Baustelle) widmen, während der Meister das für die
 anstehende Arbeit passende Werkzeug auswählen kann.
 
 Würden hier blockierende Methodenaufrufe eingesetzt, dann wäre es nicht
-möglich die Zeit in der die Werkzeugkiste geholt wird sinnvoll zu
+möglich, die Zeit in der die Werkzeugkiste geholt wird, sinnvoll zu
 nutzen.
 
 \paragraph{Pseudocode} für diesen Anwendungsfall:
@@ -136,8 +136,8 @@ Der zweite Aufruf der \texttt{success()}-Methode des \emph{Promises}
 wird eine Exception auslösen, unabhängig vom Parameter.
 
 Dieses Verhalten ist gewollt und macht \emph{Promises} berechenbar.
-Es gibt zwei Möglichkeiten wie diese abgeschlossen werden könnnen:
-Entweder durch einen Wert von dem Typ mit dem sie typisiert sind,
-oder durch eine Exception falls bei der Berechnung ein Fehler auftrat.
+Es gibt zwei Möglichkeiten wie diese abgeschlossen werden können:
+Entweder durch einen Wert des Typs mit dem sie typisiert sind,
+oder durch eine Exception, falls bei der Berechnung ein Fehler aufgetreten ist.
 Ein Beispiel in unserem Anwendungsfall dafür könnte sein, dass der
 Lehrling den Werkzeugkasten im Auto nicht finden kann.
