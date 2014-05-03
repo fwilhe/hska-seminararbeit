@@ -113,6 +113,13 @@ einmaligen Schreibzugriff auf ein Objekt, das zum gegebenen Zeitpunkt
 noch nicht beschrieben werden kann, zum Beispiel weil dieser Wert
 noch nicht berechnet worden ist.
 
+Er befindet sich immer in einem von zwei Zuständen:
+\begin{itemize}
+ \item{\textbf{\emph{Unerledigt}} Es wurde noch keine Ergebnisse in den Promise geschrieben.}
+ \item{\textbf{\emph{Erledigt}} Der Promise wurde abgeschlossen. Entweder durch ein.}
+ ergebnis oder durch eine Exception.
+\end{itemize}
+
 \paragraph{Einfaches Beispiel in Pseudocode}
 
 \lstinputlisting
@@ -197,6 +204,17 @@ die Möglichkeit eines Fehlers, der dazu führen würde dass das Ziel
        captionpos=b]
  {../code/harvestluna/Harvest.pseudo}
  
+\paragraph{filter} wendet ein Prädikat auf den Inhalt eines Futures
+an. Ein Beispiel für die Verwendung dieses Kombinators könnte es sein,
+dass ein \emph{Future} eine Nachricht enthält und die Nachricht nur
+von Interesse ist wenn sie von einem bestimmten Absender stammt.
+
+Wenn diese Bedinung erfüllt ist, so wird ein neuer Future genau
+diese Nachricht enthalten, wenn sie nicht erfüllt ist wird er eine
+\texttt{NoSuchElementException} enthalten.
+
+% code beispiel
+ 
 \paragraph{fallbackTo} ist ein Kombinator der zwei \emph{Futures}
 verbindet. Dabei wird überprüft, ob der erste einen Wert (und damit
 keine Exception) enthält. Wenn dies der Fall ist, wird dieser ausgewählt.
@@ -231,5 +249,7 @@ zur Auswahl, über welchen Kanal als erstes Hilfe zu erwarten ist.
  
 Listing \ref{lst:scala_firstCompletedOf} skizziert diesen
 Anwendungsfall.
+
+\paragraph{andThen}
 
 \paragraph{For-Comprehension}
