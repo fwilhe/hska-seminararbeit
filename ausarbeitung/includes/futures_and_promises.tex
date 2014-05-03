@@ -2,7 +2,7 @@
 
 \subsection{Motivation}
 
-Methodenaufrufe in üblichen Programmiersprachen sind blockierend. Das bedeutet,
+\paragraph{Blockierende Methodenaufrufe} Methodenaufrufe in üblichen Programmiersprachen sind blockierend. Das bedeutet,
 dass das Hauptprogramm solange blockiert wird, wie der Methodenaufruf läuft.
 So wird in Listing \ref{lst:codeBlocking} die Methode \texttt{tuEtwas()} eines Objektes aufgerufen.
 
@@ -13,7 +13,21 @@ main() {
 }
 \end{lstlisting}
 
-Führen wir das Schlüsselwort \texttt{nebenlaeufig} in unseren Pseudocode ein,
+\begin{figure}[htbp]
+  \centering
+  \fbox{
+	\includegraphics[scale=0.7]{pic/BlockingCall.png}
+  }
+  \caption{Ein blockierender Methodenaufruf }
+  \label{blockingCall}
+\end{figure}
+
+In Abbildung \ref{blockingCall} wird dieser Sachverhalt graphisch
+dargestellt: Da der Aufruf blockiert kann immer nur ein Thread
+arbeiten (in der Abbidlung grün).
+
+\paragraph{Nicht-blockierende Methodenaufrufe} Führen wir das Schlüsselwort
+\texttt{nebenlaeufig} in unseren Pseudocode ein,
 können wir ausdrücken, dass die aufgerufene Methode nicht blockieren soll
 und im Hauptthread weitergearbeitet werden kann.
 
@@ -24,8 +38,21 @@ main() {
 }
 \end{lstlisting}
 
+\begin{figure}[htbp]
+  \centering
+  \fbox{
+	\includegraphics[scale=0.7]{pic/NonBlockingCall.png}
+  }
+  \caption{Ein nicht blockierender Methodenaufruf }
+  \label{nonBlockingCall}
+\end{figure}
+
 Nun kann \texttt{tuEtwasAnderes()} \emph{nebenläufig} ausgeführt werden. Damit
 ist es bei mehreren Prozessoren möglich, den Code parallel auszuführen.
+
+Abbildung \ref{nonBlockingCall} zeigt das gewünschte Verhalten:
+Es entstehen zwei Threads die gleichzeitig ausgeführt werden können,
+wenn die Hardware dazu in der Lage ist.
 
 Eine Analogie aus dem IT-Umfeld sind Unix-Shells. Wenn zum Beispiel ein
 \texttt{find}-Befehl ausgeführt wird, blockiert die Shell bis der Befehl
@@ -106,8 +133,8 @@ nicht sein.
 \begin{table}[h]
 \begin{tabular}{lllll}
  & \textbf{Eigenschaft} & \textbf{Future} & \textbf{Promise} &  \\
- & Lesbar & Ja & Nein &  \\
- & Schreibbar & Nein & Ja &  \\
+ & Lesbar (mehrfach) & Ja & Nein &  \\
+ & Schreibbar (einmal) & Nein & Ja &  \\
  & Beinhaltet anderen & Nein & Ja &  \\
  &  &  &  &  \\
  &  &  &  &  \\
@@ -117,10 +144,28 @@ nicht sein.
 
 \subsection{Kombinatoren}
 
-Kombinatoren werden in der offiziellen \emph{Scala}-Dokumentation beschrieben (vgl.: \cite{scalaDokuFP}).
-Sie erlauben es, mehrere \emph{Futures} zu verbinden, ohne die \texttt{onComplete()}-Methoden
-zu verschachteln. Auf diese Weise können komplexe Zusammenhänge relativ einfach
+\paragraph{Motivation} Kombinatoren werden in der offiziellen 
+\emph{Scala}-Dokumentation beschrieben (vgl.: \cite{scalaDokuFP}).
+Sie erlauben es, mehrere \emph{Futures} zu verbinden. 
+Auf diese Weise können komplexe Zusammenhänge relativ einfach
 im Code formuliert werden.
+
+Eine angenehme Eigenschaft von Kombinatoren ist es, dass man bei
+der Arbeit damit in der Welt der Futures bleibt. So bildet
+ein \emph{map} einen Future auf einen anderen ab. Es gibt keinen
+Bruch innerhalb der Programmiersprache, das mentale Modell der
+Futures bleibt intakt.
+
+Sie ersparen es dem Programmierer zudem seinen Code mit verschachtelten
+Callback-Methoden auszustatten. Diese machen Programme nicht nur
+schwer lesbar, sie vermindern zudem die Sichtbarkeit von \emph{Futures}
+die innerhalb eines geschachtelten Blocks erzeugt werden, so dass
+außerhalb dieser Ebene nicht auf den Callback dieses \emph{Futures}
+reagiert werden kann.
+
+Ein Beispiel für \emph{Futures} mit Kombinatoren ist in \ref{lst:holiday}
+gegeben. Ein Äquivalentes Programm mit verschachtelten Callbacks
+ist in \ref{lst:holiday_nested} angegeben.
 
 \paragraph{map} ist einer der grundlegenden Kombinatoren. Er bildet
 einen \emph{Future} nach bestimmten Regeln auf einen anderen ab.
@@ -134,6 +179,17 @@ die Gurke verkehrsfähig ist oder entsorgt wird.
 
 Falls sie nicht gerade genug ist, enthält der \texttt{harvestFuture}
 eine Exception.
+
+Möglicherweise schlägt schon der erste \emph{Future} fehl. Im gennanten
+Beispiel könnte es passieren, dass keine Gurken mehr auf dem Feld sind.
+In diesem Fall wird der erste \emph{Future} eine Exception beinhalten.
+Die \texttt{map}-Funktion bildet in diesem Fall die Exception des
+ersten \emph{Futures} auf den zweiten ab.
+
+Im gezeigten Beispiel können daher zwei verschiedene Exceptions auftreten:
+Im \texttt{cucumberFuture} sowie im \texttt{harvestFuture} besteht
+die Möglichkeit eines Fehlers, der dazu führen würde dass das Ziel
+(die Gruke zu ernten) nicht erreicht wird.
 
 \lstinputlisting
     [caption={Pseudocode zum \emph{map}-Kombinator },
@@ -158,7 +214,7 @@ In \ref{lst:scala_fallbackTo} ist ein einfaches Beispiel gegeben:
 
 Eine Suchanfrage kann von verschiedenen Anbietern bearbeitet werden. 
 Wenn ein Anbieter ausfällt, steht das Ergebnis eines anderen Anbieters 
-zur Verfügung. Im worst case stehen keine Anbieter zur Verfügung, 
+zur Verfügung. Im ungünstigsten Fall stehen keine Anbieter zur Verfügung, 
 dann ist es nicht möglich, ein Ergebnis anzuzeigen.
 
 \paragraph{firstCompletedOf} wählt den \emph{Future} aus, der als
