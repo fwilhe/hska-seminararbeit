@@ -8,15 +8,10 @@ import scala.util.{ Failure, Success }
 object Main {
 
   case class Cucumber(bendingInDegree: Int)
-  
-  def cucumbersLeftOnField(): Boolean = Random.nextInt(10) < 3
 
   def harvestCucumber(): Future[Cucumber] = future {
     Thread.sleep(Random.nextInt(100))
-    if (cucumbersLeftOnField)
-      new Cucumber(Random.nextInt(40))
-    else
-      throw new Exception("No left")
+    throw new Exception("Harvest failed")
   }
   
   def isStraightEnough(cucumber: Cucumber): Boolean = {
