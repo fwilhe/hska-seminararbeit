@@ -12,7 +12,8 @@ Die Programmbeispiele (siehe \cite{code}) wurden mit
 \emph{Scala} in Version 2.10.3 geschrieben und getestet. Diese bietet
 eine eigene Implementierung von \emph{Futures} und \emph{Promises}.
 Eine kurze Anleitung zur Verwendung dieser Implementierung findet sich im
-\emph{Scala Improvement Process}-Dokument 14 (vgl.: \cite{sip14}).
+\emph{Scala Improvement Process}-Dokument 14 \cite{sip14}
+und in der Dokumentation zur Programmiersprache \cite{scalaDokuFP}.
 
 \emph{Futures} und \emph{Promises} sind mit dem Ziel entworfen worden,
 die nebenläufige Programmierung zu vereinfachen. Nebenläufige Programmierung
@@ -28,6 +29,9 @@ Beispiel das \emph{Aktorenmodell} aus der funktionalen Programmiersprache
 Beide dieser Ansätze bieten unterschiedliche Herangehensweisen und
 Vor- und Nachteile. So erlauben \emph{Aktoren} es, einen internen Zustand
 zu speichern. \emph{Futures} dagegen sind einfach kombinierbar.
+
+Der Einsatzzweck von \emph{Futures} liegt vor allem darin bestimmte
+aufwändige Berechnungen einmalig durchführen zu lassen.
 
 Dass es sich bei \emph{Futures} und \emph{Promises} um keine neuen
 Ideen handelt wird deutlich, wenn man \cite{Baker:1977:IGC:872734.806932}

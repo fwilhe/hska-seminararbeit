@@ -23,8 +23,13 @@ main() {
 \end{figure}
 
 In Abbildung \ref{blockingCall} wird dieser Sachverhalt graphisch
-dargestellt: Da der Aufruf blockiert kann immer nur ein Thread
-arbeiten (in der Abbidlung grün).
+veranschaulicht: Da der Aufrufer blockiert wird, so lange der Aufgerufene
+arbeitet kann immer nur ein Thread arbeiten.
+
+Besonders in der heutigen Zeit in der immer mehr Computer mehrere
+Prozessorkerne haben ist dieses Verhalten nicht erwünscht. Doch auch
+auf einem Computer mit nur einem Prozessor kann es erforderlich sein,
+nebenläufig zu programmieren.
 
 \paragraph{Nicht-blockierende Methodenaufrufe} Führen wir das Schlüsselwort
 \texttt{nebenlaeufig} in unseren Pseudocode ein,
@@ -59,8 +64,13 @@ Eine Analogie aus dem IT-Umfeld sind Unix-Shells. Wenn zum Beispiel ein
 abgeschlossen ist. Durch Anhängen eines kaufmännischen \glqq und\grqq{}-Zeichens 
 ist es möglich,
 den Befehl im Hintergrund laufen zu lassen. Dadurch kann im selben
-Terminal weiter gearbeitet werden während der Befehl im Hintergrund (also nebenläufig)
+Terminal weiter gearbeitet werden während der Befehl im Hintergrund
 läuft.
+
+Klar ist, dass diese Technik keine Wunder bewirken kann und die zur
+Verfügung stehenden Ressourcen nicht vervielfacht, dennoch können
+sie so besser ausgenutzt werden da der Prozessor weniger häufig
+in einen Zustand kommt in dem er keine Arbeit hat.
 
 \subsection{Futures}
 
@@ -77,10 +87,33 @@ A Future object either holds a result of a computation or an
 exception in the case that the computation failed.
 \end{quote}
 
-Das Ziel ist es, einen angenehmen Weg zu schaffen um nicht
-blockierend (\glqq non-blocking\grqq{}) zu programmieren.
+Ein \emph{Future} ist eine Abstraktion für einen \emph{Thread}.
+Dabei werden viele technische Details vor dem Anwendungsentwickler
+versteckt, um die man sich zum Beispiel bei der Arbeit mit klassischen
+Threads in Programmiersprachen wie \emph{Java} kümmern muss.
 
-Alles was innerhalb eines \emph{Futures} passiert läuft nicht im
+Wichtig hervorzuheben sind die Begriffe \emph{non-blocking} und
+\emph{placeholder object}.
+
+Auf die Eigenschaften von nicht blockierenden Aufrufen wurde bereits
+im vorhergehenden Abschnitt eingegangen. \emph{Futures} sind so konzipiert,
+dass sie nicht blockierend arbeiten, aber wenn es erforderlich ist
+kann trotzdem blockiert werden bis ein \emph{Future} fertig ist.
+
+Der Begriff \emph{placeholder object} sagt aus, wie das mentale
+Modell hinter dem Konzept \emph{Future} zu verstehen ist. Ein
+\emph{Future} ist ein Behältnis, welches irgendwann einen Wert
+beinhalten wird. Es ist nicht möglich zu sagen wie lange das dauern
+wird, es ist aber möglich zu erfahren ob dieser Wert bereits
+verfügbar ist. Wenn er verfügbar ist, dann kann er beliebig oft
+gelesen werden, aber nie überschrieben werden.
+
+Wichtig zu erwähnen ist noch dass ein \emph{Future} alternativ
+auch eine Exception beinhalten kann. Dies ist zum Beispiel sinnvoll
+wenn bei der Berechnung etwas schief geht oder um zu signalisieren
+dass ein definierter Fehlerzustand erreicht wurde.
+
+Alles was innerhalb eines \emph{Futures} passiert, läuft nicht im
 Hauptthread.
 
 \paragraph{Einfaches Beispiel in Pseudocode}
@@ -96,6 +129,11 @@ skizziert. Sie sind generische Typen, es ist also möglich \emph{Futures}
 zu verwenden, die beliebige Typen beinhalten. Der Code des \emph{Futures}
 wird innerhalb des \texttt{future \{ ... \}}-Blocks definiert. Der
 Rückgabewert muss dem Typen entsprechen, den der \emph{Future} zurückgibt.
+
+Die Verarbeitung des Ergebnisses kann in der \texttt{onComplete}-Callback-Methode 
+erfolgen. Um nur auf erfolgreiche oder erfolglose Komplettierungen
+zu reagieren gibt es die \texttt{onSuccess}- bzw. \texttt{onFailure}-Methoden,
+welche das Abprüfen auf Erfolg ersparen.
 
 \subsection{Promises}
 
@@ -116,8 +154,7 @@ noch nicht berechnet worden ist.
 Er befindet sich immer in einem von zwei Zuständen:
 \begin{itemize}
  \item{\textbf{\emph{Unerledigt}} Es wurde noch keine Ergebnisse in den Promise geschrieben.}
- \item{\textbf{\emph{Erledigt}} Der Promise wurde abgeschlossen. Entweder durch ein.}
- ergebnis oder durch eine Exception.
+ \item{\textbf{\emph{Erledigt}} Der Promise wurde abgeschlossen. Entweder durch ein Ergebnis oder durch eine Exception.}
 \end{itemize}
 
 \paragraph{Einfaches Beispiel in Pseudocode}
@@ -140,12 +177,11 @@ nicht sein.
 \begin{table}[h]
 \begin{tabular}{lllll}
  & \textbf{Eigenschaft} & \textbf{Future} & \textbf{Promise} &  \\
+ & Teil der Scala 2.10 Standardimplementierung & Ja & Ja &  \\
  & Lesbar (mehrfach) & Ja & Nein &  \\
  & Schreibbar (einmal) & Nein & Ja &  \\
  & Beinhaltet anderen & Nein & Ja &  \\
- &  &  &  &  \\
- &  &  &  &  \\
- &  &  &  & 
+ & Kombinierbar & Ja & Nein &  \\
 \end{tabular}
 \end{table}
 
@@ -213,7 +249,22 @@ Wenn diese Bedinung erfüllt ist, so wird ein neuer Future genau
 diese Nachricht enthalten, wenn sie nicht erfüllt ist wird er eine
 \texttt{NoSuchElementException} enthalten.
 
-% code beispiel
+\lstinputlisting
+    [caption={Pseudocode zum \emph{filter}-Kombinator },
+       label = lst:scala_filter,
+       captionpos=b]
+ {../code/tomato/Tomato.pseudo}
+ 
+In \ref{lst:scala_filter} ist ein Beispiel für die Verwendung des
+\emph{filter}-Kombinators gegeben. Dabei fällt eine gewisse Ähnlichkeit
+zum \emph{map}-Kombinator auf. Aus Anwendungsentwicklersicht ist
+\emph{filter} ein Spezialfall von \emph{map}. So lassen sich Probleme
+in denen nach einem Prädikat gefiltert werden muss eleganter lösen
+als in einer Variante mit \emph{map}.
+ 
+\emph{map} dagegen erlaubt es beliebige Funktionen aufzurufen.
+So kann die Gurke direkt innerhalb dieser Funktion verladen werden
+während die Tomate nach der Prüfung noch nicht verladen ist.
  
 \paragraph{fallbackTo} ist ein Kombinator der zwei \emph{Futures}
 verbindet. Dabei wird überprüft, ob der erste einen Wert (und damit
@@ -250,6 +301,12 @@ zur Auswahl, über welchen Kanal als erstes Hilfe zu erwarten ist.
 Listing \ref{lst:scala_firstCompletedOf} skizziert diesen
 Anwendungsfall.
 
-\paragraph{andThen}
+\paragraph{andThen} ist geeignet für Operationen die Seiteneffekte
+haben. Er erlaubt es eine Kette von verarbeitungsschritten bezüglich
+eines \emph{Futures} zu erzeugen.
+
+Jeder Aufruf des \emph{andThen}-Kombinators nimmt einen \emph{Future},
+wendet die angegebene Funktion auf diesen an und gibt einen neuen
+zurück der das Ergebnis dieses \emph{Futures} enthält.
 
 \paragraph{For-Comprehension}

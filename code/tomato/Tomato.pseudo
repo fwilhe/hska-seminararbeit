@@ -1,0 +1,10 @@
+val t: Future[Tomato] = harvestTomato()  
+val tt: Future[Tomato] = 
+  t.filter(isGood(_.color))
+    
+tt.onComplete {
+  case Success(theTomato) => 
+    println("Harvested " + theTomato)
+  case Failure(ex) => 
+    println(ex.getMessage)
+}
