@@ -1,0 +1,11 @@
+val signalFuture = future {
+  readSignal()
+} andThen {
+  case _ => {
+    logSignal()
+  }
+} andThen {
+  case _ => {
+    checkSignals()
+  }
+}

@@ -309,4 +309,60 @@ Jeder Aufruf des \emph{andThen}-Kombinators nimmt einen \emph{Future},
 wendet die angegebene Funktion auf diesen an und gibt einen neuen
 zurück der das Ergebnis dieses \emph{Futures} enthält.
 
-\paragraph{For-Comprehension}
+\lstinputlisting
+    [caption={Pseudocode zum \emph{andThen}-Kombinator },
+       label = lst:scala_andThen,
+       captionpos=b]
+ {../code/signals/Signals.pseudo}
+ 
+Im Beispiel in Listing \ref{lst:scala_andThen} ist ein Beispiel
+für die Verwendung angegeben. Es werden Signale empfangen, diese
+werden im Log gespeichert und danach ausgewertet. Hier kommt es auf
+die Reihenfolge an, zudem werden Nebeneffekte ausgelöst (das Schreiben
+in eine Liste von Signalen, das verändern des Messwertes der Signale).
+
+\paragraph{For Comprehension} ist ein grundlegender Bestandteil
+der Sprache \emph{Scala}, den es vor \emph{Futures} und \emph{Promises}
+gab. Dieser erinnert, auch aufgrund des Schlüsselworts \emph{for}
+an Schleifen, wie sie aus imperativen und objektorientierten
+Programmiersprachen bekannt sind.
+
+\begin{lstlisting}[caption={For Comprehension},label={lst:forComprehension},captionpos=b]
+val seq = Seq(1, 2, 3, 4, 5)
+for (i <- seq if i % 2 == 0) yield i
+\end{lstlisting}
+
+In Listing \ref{lst:forComprehension} ist ein minimales Beispiel für
+eine \emph{For Comprehension} gegeben.
+
+Durch den \texttt{<-}-Operator wird nach und nach jedes Element
+der Sequenz an die Variable \texttt{i} gebunden.
+
+In \texttt{yield} kann auf das Ergebnis reagiert werden. In diesem
+Beispiel passiert nicht mehr als das das Ergebnis auf die Kommandozeile
+geschrieben wird.
+
+\paragraph{Beispiel} für die Kombination von \emph{Futures} mittels
+einer \emph{For Comprehension}
+
+\lstinputlisting
+    [caption={Pseudocode zur \emph{For Comprehension} },
+       label = lst:scala_for_comprehension,
+       captionpos=b]
+ {../code/carcare/Carcare.pseudo}
+ 
+In diesem Beispiel wird an einem PKW gearbeitet. Es gibt zwei
+Aufgaben, die erledigt werden müssen: Ein Reifen muss gewechselt werden
+(dies unterteilt sich in die voneinander abhängigen Teilaufgaben
+\emph{Neuen Reifen besorgen} und \emph{Neuen Reifen montieren}) und
+das Fahrzeug muss gewaschen werden. Bevor der neue Reifen also montiert
+werden kann muss gewartet werden bis er verfügbar ist. Diese Zeit
+kann genutzt werden um einen Teil zu waschen.
+
+Während die \texttt{cleanCar()}-Methode im Hauptthread arbeitet
+blockiert die andere Aufgabe so lange, bis die erste Teilaufgabe
+erfüllt ist. Danach kann der neue Reifen montiert werden und
+eine Erfolgsmeldung ausgegeben werden.
+
+Auf diese Art und Weise ist es Möglich Ketten von \emph{Futures}
+zu definieren die nacheinander abgearbeitet werden müssen.
