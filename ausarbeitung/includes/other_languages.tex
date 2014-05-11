@@ -3,6 +3,9 @@
 Viele Programmiersprachen bieten mittlerweile Implementierungen von
 \emph{Futures} und zum Teil von \emph{Promises}.
 
+Ziel dieses Kapitels ist es, einen Überblick zu geben, wie diese
+in den wichtigsten Sprachen umgesetzt werden.
+
 \paragraph{Java} bietet seit Version 1.5 der Sprache eine 
 \texttt{java.util.concurrent.Future}-Klasse an (vgl.: \cite{javadocfuture}).
 
@@ -43,6 +46,9 @@ hier nicht Verfügbar.
 Der Zugriff auf den Wert eines \emph{Futures} erfolgt ebenfalls über die
 \texttt{get()}-Methode, die den Aufrufer so lange blockiert bis
 das Ergebnis des \emph{Futures} vorliegt.
+
+Vor dem \emph{C++11}-Standard waren \emph{Futures} über Bibliotheken
+verfügbar, das bekannteste Beispiel ist die \emph{Boost}-Bibliothek.
 
 \paragraph{Scala} Es gab bereits seit längerem verschiedene 
 Implementierungen dieser Sprachmittel,
