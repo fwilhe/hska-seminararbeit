@@ -68,7 +68,7 @@ wenn der Wechselkurs akzeptabel ist, das Buchen des Hotelzimmers beauftragen,
 wenn nicht eine Exception werfen.
 
 Anschließend wird ein \emph{Future} erstellt um den Flug zu buchen. Dies
-geschieht in Abhänigkeit vom Erfolg des Buchens eines Hotelzimmers.
+geschieht in Abhängigkeit vom Erfolg des Buchens eines Hotelzimmers.
 
 Wenn auch dieser \emph{Future} erfolgreich abschließt, ist die
 Liste der drei Aufgaben abgearbeitet.
@@ -81,7 +81,7 @@ nicht blockierend sind, laufen diese Aufgaben nebenläufig.
 komplett ohne die von \emph{Scala} zur Verfügung gestellten
 Kombinatoren gelöst werden. Dafür ist es notwendig, die Callback-Methoden
 (\texttt{onComplete}, \texttt{onSuccess} und \texttt{onFailure}) zu
-verschachteln. Dies führt zu wesentlich unübersichtlicherem Code
+verschachteln. Dies führt zu wesentlich unübersichtlicherem Code,
 wie folgendes Beispiel verdeutlichen soll:
 
 \lstinputlisting
@@ -143,7 +143,7 @@ wird eine Exception auslösen, unabhängig vom Parameter.
 
 Dieses Verhalten ist gewollt und macht \emph{Promises} berechenbar.
 Es gibt zwei Möglichkeiten wie diese abgeschlossen werden können:
-Entweder durch einen Wert des Typs mit dem sie typisiert sind,
+Entweder durch einen Wert des Typs mit dem sie typisiert sind
 oder durch eine Exception, falls bei der Berechnung ein Fehler aufgetreten ist.
 Ein Beispiel in unserem Anwendungsfall dafür könnte sein, dass der
 Lehrling den Werkzeugkasten im Auto nicht finden kann.

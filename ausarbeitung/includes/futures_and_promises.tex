@@ -3,7 +3,7 @@
 \subsection{Motivation}
 
 \paragraph{Blockierende Methodenaufrufe} Methodenaufrufe in üblichen Programmiersprachen sind blockierend. Das bedeutet,
-dass das Hauptprogramm solange blockiert wird, wie der Methodenaufruf läuft.
+dass das Hauptprogramm solange blockiert wird wie der Methodenaufruf läuft.
 So wird in Listing \ref{lst:codeBlocking} die Methode \texttt{tuEtwas()} eines Objektes aufgerufen.
 
 \begin{lstlisting}[caption={Blockierender Methodenaufruf},label={lst:codeBlocking},captionpos=b]
@@ -23,11 +23,11 @@ main() {
 \end{figure}
 
 In Abbildung \ref{blockingCall} wird dieser Sachverhalt graphisch
-veranschaulicht: Da der Aufrufer blockiert wird, so lange der Aufgerufene
-arbeitet kann immer nur ein Thread arbeiten.
+veranschaulicht: Da der Aufrufer blockiert wird solange der Aufgerufene
+arbeitet, kann immer nur ein Thread arbeiten.
 
-Besonders in der heutigen Zeit in der immer mehr Computer mehrere
-Prozessorkerne haben ist dieses Verhalten nicht erwünscht. Doch auch
+Besonders in der heutigen Zeit, in der immer mehr Computer mehrere
+Prozessorkerne haben, ist dieses Verhalten nicht erwünscht. Doch auch
 auf einem Computer mit nur einem Prozessor kann es erforderlich sein,
 nebenläufig zu programmieren.
 
@@ -106,14 +106,14 @@ Modell hinter dem Konzept \emph{Future} zu verstehen ist. Ein
 beinhalten wird. Es ist nicht möglich zu sagen wie lange das dauern
 wird, es ist aber möglich zu erfahren ob dieser Wert bereits
 verfügbar ist. Wenn er verfügbar ist, dann kann er beliebig oft
-gelesen werden, aber nie überschrieben werden.
+gelesen, aber nie überschrieben werden.
 
-Wichtig zu erwähnen ist noch dass ein \emph{Future} alternativ
+Wichtig zu erwähnen ist, dass ein \emph{Future} alternativ
 auch eine Exception beinhalten kann. Dies ist zum Beispiel sinnvoll
 wenn bei der Berechnung etwas schief geht oder um zu signalisieren
 dass ein definierter Fehlerzustand erreicht wurde.
 
-Alles was innerhalb eines \emph{Futures} passiert, läuft nicht im
+Alles was innerhalb eines \emph{Futures} passiert läuft nicht im
 Hauptthread.
 
 \paragraph{Einfaches Beispiel in Pseudocode}
@@ -132,7 +132,7 @@ Rückgabewert muss dem Typen entsprechen, den der \emph{Future} zurückgibt.
 
 Die Verarbeitung des Ergebnisses kann in der \texttt{onComplete}-Callback-Methode 
 erfolgen. Um nur auf erfolgreiche oder erfolglose Komplettierungen
-zu reagieren gibt es die \texttt{onSuccess}- bzw. \texttt{onFailure}-Methoden,
+zu reagieren, gibt es die \texttt{onSuccess}- bzw. \texttt{onFailure}-Methoden,
 welche das Abprüfen auf Erfolg ersparen.
 
 \subsection{Promises}
@@ -153,8 +153,8 @@ noch nicht berechnet worden ist.
 
 Er befindet sich immer in einem von zwei Zuständen:
 \begin{itemize}
- \item{\textbf{\emph{Unerledigt}} Es wurde noch keine Ergebnisse in den Promise geschrieben.}
- \item{\textbf{\emph{Erledigt}} Der Promise wurde abgeschlossen. Entweder durch ein Ergebnis oder durch eine Exception.}
+ \item{\textbf{\emph{Unerledigt}} Es wurden noch keine Ergebnisse in den Promise geschrieben.}
+ \item{\textbf{\emph{Erledigt}} Der Promise wurde durch ein Ergebnis oder durch eine Exception abgeschlossen.}
 \end{itemize}
 
 \paragraph{Einfaches Beispiel in Pseudocode}
@@ -167,7 +167,7 @@ Er befindet sich immer in einem von zwei Zuständen:
  
 Im Beispiel in Listing \ref{lst:scala_mini_promise} ist ein \emph{Promise} zu sehen.
 Jedes \emph{Promise} beinhaltet ein \emph{Future}. Im Programm kann
-so lange gerechnet werden, bis der Wert mit dem das \emph{Promise}
+so lange gerechnet werden bis der Wert, mit dem das \emph{Promise}
 vervollständigt werden kann, verfügbar ist. Im Beispiel ist dieser
 Wert der Einfachheit halber hart codiert, in der Praxis wird er das
 nicht sein.
@@ -199,7 +199,7 @@ ein \emph{map} einen Future auf einen anderen ab. Es gibt keinen
 Bruch innerhalb der Programmiersprache, das mentale Modell der
 Futures bleibt intakt.
 
-Sie ersparen es dem Programmierer zudem seinen Code mit verschachtelten
+Sie ersparen es dem Programmierer zudem, seinen Code mit verschachtelten
 Callback-Methoden auszustatten. Diese machen Programme nicht nur
 schwer lesbar, sie vermindern zudem die Sichtbarkeit von \emph{Futures}
 die innerhalb eines geschachtelten Blocks erzeugt werden, so dass
@@ -207,31 +207,31 @@ außerhalb dieser Ebene nicht auf den Callback dieses \emph{Futures}
 reagiert werden kann.
 
 Ein Beispiel für \emph{Futures} mit Kombinatoren ist in \ref{lst:holiday}
-gegeben. Ein Äquivalentes Programm mit verschachtelten Callbacks
+gegeben. Ein äquivalentes Programm mit verschachtelten Callbacks
 ist in \ref{lst:holiday_nested} angegeben.
 
 \paragraph{map} ist einer der grundlegenden Kombinatoren. Er bildet
 einen \emph{Future} nach bestimmten Regeln auf einen anderen ab.
 
 In \ref{lst:scala_map} ist ein einfaches Beispiel dafür gegeben.
-In diesem Beispiel wird eine Gurke geerntet. Deren Eigenschaft ist eine
-Krümmung (in Grad). Da sich nur einigermaßen gerade
-Gurken gut verkaufen lassen, wird diese Future per \texttt{map}-Funktion
+In diesem Beispiel wird eine Gurke geerntet, deren Eigenschaft eine
+Krümmung (in Grad) ist. Da sich nur einigermaßen gerade
+Gurken gut verkaufen lassen, wird dieses \emph{Future} per \texttt{map}-Funktion
 auf einen anderen Future abgebildet. Hier findet die Prüfung statt, ob
 die Gurke verkehrsfähig ist oder entsorgt wird.
 
 Falls sie nicht gerade genug ist, enthält der \texttt{harvestFuture}
 eine Exception.
 
-Möglicherweise schlägt schon der erste \emph{Future} fehl. Im gennanten
+Möglicherweise schlägt schon der erste \emph{Future} fehl. Im genannten
 Beispiel könnte es passieren, dass keine Gurken mehr auf dem Feld sind.
 In diesem Fall wird der erste \emph{Future} eine Exception beinhalten.
-Die \texttt{map}-Funktion bildet in diesem Fall die Exception des
+Die \texttt{map}-Funktion bildet dann die Exception des
 ersten \emph{Futures} auf den zweiten ab.
 
 Im gezeigten Beispiel können daher zwei verschiedene Exceptions auftreten:
 Im \texttt{cucumberFuture} sowie im \texttt{harvestFuture} besteht
-die Möglichkeit eines Fehlers, der dazu führen würde dass das Ziel
+die Möglichkeit eines Fehlers, der dazu führen würde, dass das Ziel
 (die Gruke zu ernten) nicht erreicht wird.
 
 \lstinputlisting
@@ -243,10 +243,10 @@ die Möglichkeit eines Fehlers, der dazu führen würde dass das Ziel
 \paragraph{filter} wendet ein Prädikat auf den Inhalt eines Futures
 an. Ein Beispiel für die Verwendung dieses Kombinators könnte es sein,
 dass ein \emph{Future} eine Nachricht enthält und die Nachricht nur
-von Interesse ist wenn sie von einem bestimmten Absender stammt.
+von Interesse ist, wenn sie von einem bestimmten Absender stammt.
 
-Wenn diese Bedinung erfüllt ist, so wird ein neuer Future genau
-diese Nachricht enthalten, wenn sie nicht erfüllt ist wird er eine
+Wenn diese Bedingung erfüllt ist, wird ein neuer \emph{Future} genau
+diese Nachricht enthalten, wenn sie nicht erfüllt ist, wird er eine
 \texttt{NoSuchElementException} enthalten.
 
 \lstinputlisting
@@ -257,13 +257,13 @@ diese Nachricht enthalten, wenn sie nicht erfüllt ist wird er eine
  
 In \ref{lst:scala_filter} ist ein Beispiel für die Verwendung des
 \emph{filter}-Kombinators gegeben. Dabei fällt eine gewisse Ähnlichkeit
-zum \emph{map}-Kombinator auf. Aus Anwendungsentwicklersicht ist
-\emph{filter} ein Spezialfall von \emph{map}. So lassen sich Probleme
-in denen nach einem Prädikat gefiltert werden muss eleganter lösen
+zum \emph{map}-Kombinator auf. Aus der Sicht des Anwendungsentwicklers ist
+\emph{filter} ein Spezialfall von \emph{map}. So lassen sich Probleme,
+in denen nach einem Prädikat gefiltert werden muss, eleganter lösen
 als in einer Variante mit \emph{map}.
  
 \emph{map} dagegen erlaubt es beliebige Funktionen aufzurufen.
-So kann die Gurke direkt innerhalb dieser Funktion verladen werden
+So kann die Gurke direkt innerhalb dieser Funktion verladen werden,
 während die Tomate nach der Prüfung noch nicht verladen ist.
  
 \paragraph{fallbackTo} ist ein Kombinator der zwei \emph{Futures}
@@ -286,12 +286,12 @@ Wenn ein Anbieter ausfällt, steht das Ergebnis eines anderen Anbieters
 zur Verfügung. Im ungünstigsten Fall stehen keine Anbieter zur Verfügung, 
 dann ist es nicht möglich, ein Ergebnis anzuzeigen.
 
-Dieser Kombinator ist geeignet wenn es eine klare Präferenz gibt,
+Dieser Kombinator ist geeignet, wenn es eine klare Präferenz gibt,
 also wenn zum Beispiel von einem Suchanbieter bessere Ergebnisse
 zu erwarten sind.
 
-Es ist auch möglich mehrere Aufrufe hintereinander zu schreiben,
-so könnte in diesem Beispiel mit Yahoo noch ein Anbieter für
+Es ist auch möglich, mehrere Aufrufe hintereinander zu schreiben,
+in diesem Beispiel könnte mit Yahoo noch ein Anbieter für
 Suchergebnisse aufgenommen werden (Listing \ref{lst:scala_fallbackTo2}).
 
 \lstinputlisting
@@ -327,15 +327,15 @@ Diese wählt den ersten \emph{Future} aus, der einen Wert zurückliefert
 und erstellt einen neuen \emph{Future} dafür. Nun ist es möglich
 auf die Callback-Methode dieses \emph{Futures} zu warten. 
 
-\paragraph{andThen} ist geeignet für Operationen die Seiteneffekte
-haben. Er erlaubt es eine Kette von verarbeitungsschritten bezüglich
-eines \emph{Futures} zu erzeugen. Dabei ist es garantiert dass
+\paragraph{andThen} ist geeignet für Operationen, die Seiteneffekte
+haben. Er erlaubt es, eine Kette von Verarbeitungsschritten bezüglich
+eines \emph{Futures} zu erzeugen. Dabei ist es garantiert, dass
 die Reihenfolge eingehalten wird, in der die \emph{andThen} Aufrufe
 im Quelltext stehen.
 
 Jeder Aufruf des \emph{andThen}-Kombinators nimmt einen \emph{Future},
 wendet die angegebene Funktion auf diesen an und gibt einen neuen
-zurück der das Ergebnis dieses \emph{Futures} enthält.
+zurück, der das Ergebnis dieses \emph{Futures} enthält.
 
 \lstinputlisting
     [caption={Pseudocode zum \emph{andThen}-Kombinator },
@@ -371,10 +371,10 @@ Durch den \texttt{<-}-Operator wird nach und nach jedes Element
 der Sequenz an die Variable \texttt{i} gebunden.
 
 Für Entwickler die mit imperativen/objektorientierten Sprachen
-vertraut sind erinnert dies an das \emph{for each}-Konstrukt.
+vertraut, sind erinnert dies an das \emph{for each}-Konstrukt.
 
 In \texttt{yield} kann auf das Ergebnis reagiert werden. In diesem
-Beispiel passiert nicht mehr als das das Ergebnis auf die Kommandozeile
+Beispiel passiert nicht mehr, als dass das Ergebnis auf die Kommandozeile
 geschrieben wird.
 
 \paragraph{Beispiel} für die Kombination von \emph{Futures} mittels
@@ -391,13 +391,13 @@ Aufgaben, die erledigt werden müssen: Ein Reifen muss gewechselt werden
 (dies unterteilt sich in die voneinander abhängigen Teilaufgaben
 \emph{Neuen Reifen besorgen} und \emph{Neuen Reifen montieren}) und
 das Fahrzeug muss gewaschen werden. Bevor der neue Reifen also montiert
-werden kann muss gewartet werden bis er verfügbar ist. Diese Zeit
-kann genutzt werden um einen Teil zu waschen.
+werden kann, muss gewartet werden bis er verfügbar ist. Diese Zeit
+kann genutzt werden, um einen Teil des PKW zu waschen.
 
-Während die \texttt{cleanCar()}-Methode im Hauptthread arbeitet
+Während die \texttt{cleanCar()}-Methode im Hauptthread arbeitet,
 blockiert die andere Aufgabe so lange, bis die erste Teilaufgabe
-erfüllt ist. Danach kann der neue Reifen montiert werden und
+erfüllt ist. Danach kann der neue Reifen montiert und
 eine Erfolgsmeldung ausgegeben werden.
 
-Auf diese Art und Weise ist es Möglich Ketten von \emph{Futures}
-zu definieren die nacheinander abgearbeitet werden müssen.
+Auf diese Art und Weise ist es möglich Ketten von \emph{Futures}
+zu definieren, die nacheinander abgearbeitet werden müssen.

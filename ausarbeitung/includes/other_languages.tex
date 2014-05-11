@@ -19,11 +19,11 @@ zu werden wenn ein \emph{Future} ein Ergebnis enthält, stattdessen
 ist es notwendig \texttt{get()} aufzurufen und im Fehlerfall
 eine Exception zu behandeln.
 
-Es ist zwar möglich eine Callback-Klasse auf Basis des \emph{Interface}
+Es ist zwar möglich, eine Callback-Klasse auf Basis des \emph{Interface}
 \texttt{Runnable} zu erstellen, doch dies ist aus Entwicklersicht
 nicht mit dem Komfort vergleichbar, den \emph{Scala Futures} bieten.
 
-Ein weiterer Nachteil besteht darin dass die aus \emph{Scala} bekannten
+Ein weiterer Nachteil besteht darin, dass die aus \emph{Scala} bekannten
 Kombinatoren nicht verfügbar sind. Es ist zwar möglich deren Funktion
 nachzuprogrammieren, doch dies sorgt für erheblichen Mehraufwand
 auf Seiten des Anwendungsentwicklers und macht \emph{Java Futures}
@@ -33,7 +33,7 @@ Drittanbieter wie zum Beispiel die \emph{Guava Google Libraries for Java}
 bieten eigene Implementierungen, die einzelne Nachteile ausbessern.
 So gibt es dort zum Beispiel einen \emph{ListenableFuture} der die
 bekannten \texttt{onSuccess()} und \texttt{onFaulure()}-Callback-Methoden
-kennt. Zusätzlich bietet diese Klasse Methoden die zum Teil den
+kennt. Zusätzlich bietet diese Klasse Methoden, die zum Teil den
 Kombinatoren aus \emph{Scala} ähneln.
 
 \paragraph{C++} Seit \emph{C++11} kennt der \emph{C++}-Standard
@@ -41,7 +41,7 @@ Kombinatoren aus \emph{Scala} ähneln.
 
 \emph{Futures} in \emph{C++} funktionieren nicht gleich wie in
 \emph{Scala}, so sind zum Beispiel die Kombinatoren wie in Java auch 
-hier nicht Verfügbar.
+hier nicht verfügbar.
 
 Der Zugriff auf den Wert eines \emph{Futures} erfolgt ebenfalls über die
 \texttt{get()}-Methode, die den Aufrufer so lange blockiert bis
