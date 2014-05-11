@@ -286,11 +286,31 @@ Wenn ein Anbieter ausfällt, steht das Ergebnis eines anderen Anbieters
 zur Verfügung. Im ungünstigsten Fall stehen keine Anbieter zur Verfügung, 
 dann ist es nicht möglich, ein Ergebnis anzuzeigen.
 
+Dieser Kombinator ist geeignet wenn es eine klare Präferenz gibt,
+also wenn zum Beispiel von einem Suchanbieter bessere Ergebnisse
+zu erwarten sind.
+
+Es ist auch möglich mehrere Aufrufe hintereinander zu schreiben,
+so könnte in diesem Beispiel mit Yahoo noch ein Anbieter für
+Suchergebnisse aufgenommen werden (Listing \ref{lst:scala_fallbackTo2}).
+
+\lstinputlisting
+    [caption={Pseudocode zum \emph{fallbackTo}-Kombinator mit drei Futures },
+       label = lst:scala_fallbackTo2,
+       captionpos=b]
+ {../code/lookingforsomething/Looking2.pseudo}
+
 \paragraph{firstCompletedOf} wählt den \emph{Future} aus, der als
 erstes beendet ist. Dies ist nützlich wenn es um Geschwindigkeit
 geht. Wenn zum Beispiel ein Notfall passiert und über verschiedene
 Kanäle ein Notruf abgesetzt wird, ist das einzig sinnvolle Kriterium
-zur Auswahl, über welchen Kanal als erstes Hilfe zu erwarten ist.
+zur Auswahl, über welchen Kanal als erstes Hilfe verfügbar ist.
+
+Wichtig zu beachten ist dabei, dass die anderen \emph{Futures}
+nicht abgebrochen werden wenn der erste ausgewählt ist. Wenn diese
+zum Beispiel rechenintensive Operationen durchführen obwohl ein
+anderer \emph{Future} bereits fertig ist, so werden Ressourcen
+verschwendet.
 
 \lstinputlisting
     [caption={Pseudocode zum \emph{firstCompletedOf}-Kombinator },
@@ -299,11 +319,19 @@ zur Auswahl, über welchen Kanal als erstes Hilfe zu erwarten ist.
  {../code/accident/Accident.pseudo}
  
 Listing \ref{lst:scala_firstCompletedOf} skizziert diesen
-Anwendungsfall.
+Anwendungsfall. Es werden drei \emph{Futures} erzeugt die jeweils
+einen Notruf repräsentieren. Auf eine Liste von diesen \emph{Futures}
+kann die \texttt{firstCompletedOf}-Funktion angewandt werden.
+
+Diese wählt den ersten \emph{Future} aus, der einen Wert zurückliefert
+und erstellt einen neuen \emph{Future} dafür. Nun ist es möglich
+auf die Callback-Methode dieses \emph{Futures} zu warten. 
 
 \paragraph{andThen} ist geeignet für Operationen die Seiteneffekte
 haben. Er erlaubt es eine Kette von verarbeitungsschritten bezüglich
-eines \emph{Futures} zu erzeugen.
+eines \emph{Futures} zu erzeugen. Dabei ist es garantiert dass
+die Reihenfolge eingehalten wird, in der die \emph{andThen} Aufrufe
+im Quelltext stehen.
 
 Jeder Aufruf des \emph{andThen}-Kombinators nimmt einen \emph{Future},
 wendet die angegebene Funktion auf diesen an und gibt einen neuen
@@ -315,15 +343,19 @@ zurück der das Ergebnis dieses \emph{Futures} enthält.
        captionpos=b]
  {../code/signals/Signals.pseudo}
  
-Im Beispiel in Listing \ref{lst:scala_andThen} ist ein Beispiel
+In Listing \ref{lst:scala_andThen} ist ein Beispiel
 für die Verwendung angegeben. Es werden Signale empfangen, diese
 werden im Log gespeichert und danach ausgewertet. Hier kommt es auf
-die Reihenfolge an, zudem werden Nebeneffekte ausgelöst (das Schreiben
-in eine Liste von Signalen, das verändern des Messwertes der Signale).
+die Reihenfolge an, zudem werden Nebeneffekte ausgelöst.
+
+So wird zum Beispiel in \texttt{logSignal()} eine Liste von empfangenen
+Signalen angelegt. Die Funktion \texttt{checkSignals()} verändert
+eine Zustandsvariable in der gespeichert ist, ob die empfangenen
+Signale den erwarteten ensprechen.
 
 \paragraph{For Comprehension} ist ein grundlegender Bestandteil
 der Sprache \emph{Scala}, den es vor \emph{Futures} und \emph{Promises}
-gab. Dieser erinnert, auch aufgrund des Schlüsselworts \emph{for}
+gab. Dieser erinnert, auch aufgrund des Schlüsselworts \emph{for},
 an Schleifen, wie sie aus imperativen und objektorientierten
 Programmiersprachen bekannt sind.
 
@@ -337,6 +369,9 @@ eine \emph{For Comprehension} gegeben.
 
 Durch den \texttt{<-}-Operator wird nach und nach jedes Element
 der Sequenz an die Variable \texttt{i} gebunden.
+
+Für Entwickler die mit imperativen/objektorientierten Sprachen
+vertraut sind erinnert dies an das \emph{for each}-Konstrukt.
 
 In \texttt{yield} kann auf das Ergebnis reagiert werden. In diesem
 Beispiel passiert nicht mehr als das das Ergebnis auf die Kommandozeile

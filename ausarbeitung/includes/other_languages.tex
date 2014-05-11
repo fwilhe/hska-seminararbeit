@@ -1,0 +1,55 @@
+\section{\emph{Futures} in anderen Sprachen}
+
+Viele Programmiersprachen bieten mittlerweile Implementierungen von
+\emph{Futures} und zum Teil von \emph{Promises}.
+
+\paragraph{Java} bietet seit Version 1.5 der Sprache eine 
+\texttt{java.util.concurrent.Future}-Klasse an (vgl.: \cite{javadocfuture}).
+
+Der Zugriff auf das Ergebnis eines \emph{Futures} funktioniert über
+eine \texttt{get()}-Methode, die den Aufrufer blockiert bis das
+Ergebnis vorliegt.
+
+Ein Nachteil dieser Implementierung besteht in den fehlenden
+\emph{Callback}-Methoden. So ist es nicht möglich, informiert
+zu werden wenn ein \emph{Future} ein Ergebnis enthält, stattdessen
+ist es notwendig \texttt{get()} aufzurufen und im Fehlerfall
+eine Exception zu behandeln.
+
+Es ist zwar möglich eine Callback-Klasse auf Basis des \emph{Interface}
+\texttt{Runnable} zu erstellen, doch dies ist aus Entwicklersicht
+nicht mit dem Komfort vergleichbar, den \emph{Scala Futures} bieten.
+
+Ein weiterer Nachteil besteht darin dass die aus \emph{Scala} bekannten
+Kombinatoren nicht verfügbar sind. Es ist zwar möglich deren Funktion
+nachzuprogrammieren, doch dies sorgt für erheblichen Mehraufwand
+auf Seiten des Anwendungsentwicklers und macht \emph{Java Futures}
+damit nicht besonders attraktiv.
+
+Drittanbieter wie zum Beispiel die \emph{Guava Google Libraries for Java}
+bieten eigene Implementierungen, die einzelne Nachteile ausbessern.
+So gibt es dort zum Beispiel einen \emph{ListenableFuture} der die
+bekannten \texttt{onSuccess()} und \texttt{onFaulure()}-Callback-Methoden
+kennt. Zusätzlich bietet diese Klasse Methoden die zum Teil den
+Kombinatoren aus \emph{Scala} ähneln.
+
+\paragraph{C++} Seit \emph{C++11} kennt der \emph{C++}-Standard
+\emph{std::future} und \emph{std::promise}(vgl.: \cite{cpp11FAQ}).
+
+\emph{Futures} in \emph{C++} funktionieren nicht gleich wie in
+\emph{Scala}, so sind zum Beispiel die Kombinatoren wie in Java auch 
+hier nicht Verfügbar.
+
+Der Zugriff auf den Wert eines \emph{Futures} erfolgt ebenfalls über die
+\texttt{get()}-Methode, die den Aufrufer so lange blockiert bis
+das Ergebnis des \emph{Futures} vorliegt.
+
+\paragraph{Scala} Es gab bereits seit längerem verschiedene 
+Implementierungen dieser Sprachmittel,
+unter anderem im Akka-Framework, in Skalaz, in den Twitter-Util-Klassen sowie
+in java.util.concurrent (vgl. \cite{futuresTry}).
+
+Um der Fragmentierung im Umfeld der Programmiersprache entgegenzuwirken und
+diese Techniken für alle Scala-Entwickler zugänglich zu machen, wurde auf Basis
+des SIP-Dokuments SIP-14 eine Implementierung im scala.concurrent-Package
+vorgenommen.
