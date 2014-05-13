@@ -13,3 +13,6 @@ clean:
 
 cleanall:
 	rm *aux *glg *glo *gls *ist *lof *log *out *toc *pyg *snm *nav *pdf
+	
+run:
+	xdg-open $(DOCUMENT).pdf
