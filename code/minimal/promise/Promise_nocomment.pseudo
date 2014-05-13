@@ -1,0 +1,11 @@
+val myPromise = promise[Integer]
+val myFuture = myPromise.future
+
+myPromise.success(23) 
+
+myFuture.onSuccess {
+  case result: Integer => {
+    doSomething(result)
+  }
+}   
+

@@ -1,0 +1,11 @@
+val f: Future[Integer] = future {
+  val result = doSomeComputationHere() 
+  return result
+}
+  
+f.onSuccess {
+  case value => {
+    doSomethingWithResultHere(value)
+  }
+}
+
